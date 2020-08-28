@@ -46,6 +46,16 @@ export EDITOR
 . "${HOME}/sys_bashrc/modules/git_module.sh"
 . "${HOME}/sys_bashrc/modules/history_module.sh"
 
+# Color for manpages in less makes manpages a little easier to read
+export LESS_TERMCAP_mb=$'\E[38;5;221m'
+export LESS_TERMCAP_md=$'\E[38;5;221m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;35m'
+
+
 #################################################################
 #################################################################
 #################################################################
@@ -55,7 +65,18 @@ export EDITOR
 bind 'set show-all-if-ambiguous on'
 bind 'set colored-completion-prefix on'
 
+
 function prompt_command() {
+    ###################################################
+    ### identify success/fail status of last command
+    ### DO NOT MOVE THIS VARIABLE: must be first!
+    local last_status="$?"
+    ###################################################
+    ###################################################
+    #timer_stop
+    ###################################################
+    ###################################################
+    ### Setup if else for different color themes
     PATH_COL_VAR="${SET_PATHCOL_VAR}"
     PATH_COL="${SET_PATHCOL}"
     THEME_VAR="${SET_THEME_VAR}"
@@ -63,28 +84,61 @@ function prompt_command() {
     TXTCOL="${SET_TXTCOL}"
 
     ###################################################
+    ### Turn the prompt symbol red if the user is root
+    ### root stuff
+    if [[ $(id -u) -eq 0 ]]; then
+        ### root color
+        BARCOL="${MORANGE}"
+        TXTCOL="${RED}"
+        local ENDBIT="#"
+    else
+        local ENDBIT="$"
+    fi # root bit
+
+    ###################################################
     ### Display virtual environment notification  if applicable
     ## disable the default virtualenv prompt change
     export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-    VIRTENV=$(virtualenv_min_info)
+    VIRTENV=$(virtualenv_info)
 
-    ### Display ssh variable notification in prompt if applicable - need pstree
-    #SSH_SESSION=$(ssh_info)
+    ### Display ssh variable notification in prompt if applicable
+    SSH_SESSION=$(ssh_info)
 
-    ### get parent directory
-    FULL_PATH=$(pwd)
-    LAST2_DIR=${FULL_PATH#"${FULL_PATH%/*/*}/"}
+    ### Display AWS profile if applicable
+    CURR_AWS_PROFILE=$(aws_info)
+
+    # Display tty no in prompt
+    local TTY_VAR=`tty 2> /dev/null | awk -F/ '{nlast = NF 0;print $nlast$NF": "}'`
+
+    ###################################################
+    ### set color coded error string for prompt depending on success of last command
+    if [[ $last_status == 0 ]]; then
+        ERRPROMPT="\[\033[1;1;32m\]${ENDBIT} "
+    else
+        ERRPROMPT='\[\033[1;1;31m\]X '
+    fi
+
+    ###################################################
+    ### set titlebar
+    local TITLEBAR=`pwdtail`
+    echo -ne '\033]2;'${TTY_VAR}${TITLEBAR}'\007'
 
 ## move out of indented tabs to avoid formatting horror (still in function)
 PS1="${debian_chroot:+($debian_chroot)}\n\
-${BARCOL}\
-${TXTCOL}(`date +"%H:%M"`)${BARCOL}─${TXTCOL}(\u@\H)\
-${BARCOL}─${GRAY}(${GRAY}${LAST2_DIR})\
-$(parse_git_minimal)\n\
-${BARCOL}\
-${RED}${VIRTENV} \[\033[1;1;32m\]$ ${TERGREEN}"
+${BARCOL}┌──\
+${TXTCOL}[\u]\
+${BARCOL}─\
+${TXTCOL}[\H]\
+$(parse_git)\
+${VIRTENV}${SSH_SESSION}${CURR_AWS_PROFILE}
+${BARCOL}│${DKGRAY}${TTY_VAR}${PATH_COL}> \w \
+\n${BARCOL}└──\
+${TXTCOL}`date +"%H:%M"`\
+${BARCOL}─\
+${ERRPROMPT}${TERGREEN}"
 }
+
 
 
 # history guide: https://www.digitalocean.com/community/tutorials/how-to-use-bash-history-commands-and-expansions-on-a-linux-vps

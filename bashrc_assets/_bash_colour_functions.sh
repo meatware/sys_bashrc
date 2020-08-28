@@ -148,11 +148,12 @@ function virtualenv_info(){
 
 function ssh_info(){
     # Get ssh-sess info and display in prompt
-    if pstree -p | egrep --quiet --extended-regexp ".*sshd.*\($$\)"; then
-        ssh_state="ssh"
-    else
-        ssh_state=""
-    fi
+    # if pstree -p | egrep --quiet --extended-regexp ".*sshd.*\($$\)"; then
+    #     ssh_state="ssh"
+    # else
+    #     ssh_state=""
+    # fi
+    ssh_state=""
     [[ -n "$ssh_state" ]] && echo "${BARCOL}─${TXTCOL}[${HIRed}${ssh_state}${TXTCOL}]"
 }
 
