@@ -1,7 +1,7 @@
 function check_alias_clashes() {
 	#alias lists defined aliases and sed extracts their name.
-	# The while loop runs type -ta on each of them and awk 
-	# prints the lines that both contain alias and file.	
+	# The while loop runs type -ta on each of them and awk
+	# prints the lines that both contain alias and file.
 	alias | sed 's/^[^ ]* *\|=.*$//g' | while read a; do
 	printf "%20.20s : %s\n" $a "$(type -ta $a | tr '\n' ' ')"
 	done | awk -F: '$2 ~ /file/'
@@ -41,7 +41,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
-alias bashrc='cd ${HOME}/custom_bashrc; ll'
+alias bashrc='cd ${HOME}/sys_bashrc; ll'
 
 # Goes up a specified number of directories  (i.e. up 4)
 up ()
@@ -64,13 +64,13 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 
 alias quick-ssh='ssh -Y -C -c blowfish-cbc,arcfour username@yourhost.com'
-alias edbash='gedit ~/.bashrc ~/custom_bashrc/bashrc_assets/*.sh &'
+alias edbash='gedit ~/.bashrc ~/sys_bashrc/bashrc_assets/*.sh &'
 alias F5='source ~/.bashrc'
 alias his='history'
 
 
-alias bast="ssh -A girishtampi@bastion.firmstep.com"
-alias bastd="ssh -A girishtampi@bastion.devops.firmstep.com"
+alias bast="ssh -A user@bastion.firmstep.com"
+alias bastd="ssh -A user@bastion.devops.firmstep.com"
 
 ## df - stop showing snap fs
 alias df='df -x "squashfs"'

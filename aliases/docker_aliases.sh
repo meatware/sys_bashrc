@@ -18,7 +18,7 @@ case $OSTYPE in
     ;;
 esac
 
-if [ ! -z "$(command ls "${HOME}"/custom_bashrc/modules/docker_module.sh 2>/dev/null | head -1)" ]; then
+if [ ! -z "$(command ls "${HOME}"/sys_bashrc/modules/docker_module.sh 2>/dev/null | head -1)" ]; then
 # Function aliases from docker plugin:
     alias dkrmlc='docker-remove-most-recent-container'  # Delete most recent (i.e., last) Docker container
     alias dkrmall='docker-remove-stale-assets'  # Delete all untagged images and exited containers
