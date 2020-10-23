@@ -1,10 +1,6 @@
 # .bashrc
 
 # Source global definitions
-# Enable programmable completion features for ubuntu.
-# if [ -f /etc/profile.d/bash_completion.sh ]; then
-#     source /etc/profile.d/bash_completion.sh
-# fi
 
 # Set default editor
 export VISUAL=vim
@@ -78,7 +74,6 @@ if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
 
-
 #################################################################
 #################################################################
 #################################################################
@@ -88,9 +83,20 @@ fi
 bind 'set show-all-if-ambiguous on'
 bind 'set colored-completion-prefix on'
 
+force_color_prompt=yes
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
+    else
+    color_prompt=
+    fi
+fi
 
-FULL_PROMPT="$SET_FULL_PROMPT" # set in theme_settings.sh
-if [ "$FULL_PROMPT" == "yes" ]; then
+# SET_FULL_PROMPT" # set in theme_settings.sh
+if [ "$SET_FULL_PROMPT" == "yes" ] && [ "$color_prompt" == "yes" ] ; then
     function prompt_command() {
         ###################################################
         ### identify success/fail status of last command
@@ -164,41 +170,52 @@ ${BARCOL}─\
 ${ERRPROMPT}${TERGREEN}"
 }
 
+# elif [ "$SET_FULL_PROMPT" == "mid" ] && [ "$color_prompt" == "yes " ]; then
+#     function prompt_command() {
+#         PATH_COL_VAR="${SET_PATHCOL_VAR}"
+#         PATH_COL="${SET_PATHCOL}"
+#         THEME_VAR="${SET_THEME_VAR}"
+#         BARCOL="${SET_BARCOL}"
+#         TXTCOL="${SET_TXTCOL}"
+
+#         ###################################################
+#         ### Display virtual environment notification  if applicable
+#         ## disable the default virtualenv prompt change
+#         export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+#         VIRTENV=$(virtualenv_min_info)
+
+#         ### Display ssh variable notification in prompt if applicable
+#         SSH_SESSION=$(ssh_info)
+
+#         ### get parent directory
+#         FULL_PATH=$(pwd)
+#         LAST2_DIR=${FULL_PATH#"${FULL_PATH%/*/*}/"}
+
+#         #DRIVE_PATH=$(df . | tail -1 | awk '{print $1}')
+#         #DRIVE_ID=${DRIVE_PATH#"${DRIVE_PATH%/*}/"}
+
+# ## move out of indented tabs to avoid formatting horror (still in function)
+# PS1="${debian_chroot:+($debian_chroot)}\n\
+# ${BARCOL}\
+# ${TXTCOL}(`date +"%H:%M"`)${BARCOL}─${TXTCOL}(\u@\H)\
+# ${BARCOL}─${GRAY}(${GRAY}${LAST2_DIR})\
+# $(parse_git_minimal)\n\
+# ${BARCOL}\
+# ${RED}${VIRTENV} \[\033[1;1;32m\]$ ${TERGREEN}"
+# }
+
 else
-    function prompt_command() {
-        PATH_COL_VAR="${SET_PATHCOL_VAR}"
-        PATH_COL="${SET_PATHCOL}"
-        THEME_VAR="${SET_THEME_VAR}"
-        BARCOL="${SET_BARCOL}"
-        TXTCOL="${SET_TXTCOL}"
-
-        ###################################################
-        ### Display virtual environment notification  if applicable
-        ## disable the default virtualenv prompt change
-        export VIRTUAL_ENV_DISABLE_PROMPT=1
-
-        VIRTENV=$(virtualenv_min_info)
-
-        ### Display ssh variable notification in prompt if applicable
-        SSH_SESSION=$(ssh_info)
-
-        ### get parent directory
-        FULL_PATH=$(pwd)
-        LAST2_DIR=${FULL_PATH#"${FULL_PATH%/*/*}/"}
-
-        #DRIVE_PATH=$(df . | tail -1 | awk '{print $1}')
-        #DRIVE_ID=${DRIVE_PATH#"${DRIVE_PATH%/*}/"}
-
-## move out of indented tabs to avoid formatting horror (still in function)
-PS1="${debian_chroot:+($debian_chroot)}\n\
-${BARCOL}\
-${TXTCOL}(`date +"%H:%M"`)${BARCOL}─${TXTCOL}(\u@\H)\
-${BARCOL}─${GRAY}(${GRAY}${LAST2_DIR})\
-$(parse_git_minimal)\n\
-${BARCOL}\
-${RED}${VIRTENV} \[\033[1;1;32m\]$ ${TERGREEN}"
-}
-
+    if [ "$color_prompt" = yes ]; then
+        function prompt_command() {
+            PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+        }
+    else
+        function prompt_command() {
+            PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+        }
+    fi
+    unset color_prompt force_color_prompt
 fi
 
 #################################################################
