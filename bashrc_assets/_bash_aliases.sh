@@ -62,6 +62,7 @@ up ()
 # other commands
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
 
 alias quick-ssh='ssh -Y -C -c blowfish-cbc,arcfour username@yourhost.com'
 alias edbash='gedit ~/.bashrc ~/sys_bashrc/bashrc_assets/*.sh &'
