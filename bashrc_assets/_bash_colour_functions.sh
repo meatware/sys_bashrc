@@ -49,15 +49,14 @@ function colsw(){
     ## Set default variables
     # If parameter is unset or null, the expansion of word is substituted.
     # Otherwise, the value of parameter is substituted.
-    # ${parameter:-word}
-    CURR_FULL_PROMPT="${CURR_FULL_PROMPT:-no}"
-    SET_THEME_VAR="${SET_THEME_VAR:-0}"
-    SET_BARCOL="${SET_BARCOL:-\[\033[38;5;202m\]}"
-    SET_TXTCOL="${SET_TXTCOL:-\[\033[38;5;221m\]}"
-    SET_PATHCOL_VAR="${SET_PATHCOL_VAR:-1}"
-    SET_PATHCOL="${SET_PATHCOL:-\[\033[0;37m\]}"
+    # ${parameter:=word}
 
-
+    CURR_FULL_PROMPT="${CURR_FULL_PROMPT:=\"no\"}"
+    SET_THEME_VAR="${SET_THEME_VAR:=0}"
+    SET_BARCOL="${SET_BARCOL:=\[\033[38;5;202m\]}"
+    SET_TXTCOL="${SET_TXTCOL:=\[\033[38;5;221m\]}"
+    SET_PATHCOL_VAR="${SET_PATHCOL_VAR:=1}"
+    SET_PATHCOL="${SET_PATHCOL:=\[\033[0;37m\]}"
     ##################################################
 cat << BACON > ${HOME}/sys_bashrc/theme_settings.sh
 #!/bin/bash
