@@ -1,5 +1,5 @@
 function check_alias_clashes() {
-	#alias lists defined aliases and sed extracts their name.
+	# alias lists defined aliases and sed extracts their name.
 	# The while loop runs type -ta on each of them and awk
 	# prints the lines that both contain alias and file.
 	alias | sed 's/^[^ ]* *\|=.*$//g' | while read a; do

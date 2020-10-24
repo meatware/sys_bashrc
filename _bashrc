@@ -115,7 +115,7 @@ fi
 
 # SET_FULL_PROMPT" # set in theme_settings.sh
 if [ "$color_prompt" == "yes" ]; then
-    if [ "$SET_FULL_PROMPT" == "yes" ] ; then
+    if [ "$SET_FULL_PROMPT" == "full" ] ; then
         function prompt_command() {
             # Custom fully featured 3 line prompt with most git support
 
@@ -190,6 +190,12 @@ ${ERRPROMPT}${TERGREEN}"
 
     elif [ "$SET_FULL_PROMPT" == "mid" ]; then
         function prompt_command() {
+            ###################################################
+            ### identify success/fail status of last command
+            ### DO NOT MOVE THIS VARIABLE: must be first!
+            local last_status="$?"
+            ###################################################
+
             # Custom partially featured 2 line prompt with minimal git support
             PATH_COL_VAR="${SET_PATHCOL_VAR}"
             PATH_COL="${SET_PATHCOL}"
@@ -211,6 +217,16 @@ ${ERRPROMPT}${TERGREEN}"
             FULL_PATH=$(pwd)
             LAST2_DIR=${FULL_PATH#"${FULL_PATH%/*/*}/"}
 
+            ###################################################
+            ### set color coded error string for prompt depending on success of last command
+            if [[ $last_status == 0 ]]; then
+                ERRPROMPT="\[\033[1;1;32m\]$ "
+            else
+                ERRPROMPT='\[\033[1;1;31m\]X '
+            fi
+
+            ###################################################
+
             #DRIVE_PATH=$(df . | tail -1 | awk '{print $1}')
             #DRIVE_ID=${DRIVE_PATH#"${DRIVE_PATH%/*}/"}
 
@@ -221,7 +237,7 @@ ${TXTCOL}(`date +"%H:%M"`)${BARCOL}─${TXTCOL}(\u@\H)\
 ${BARCOL}─${GRAY}(${GRAY}${LAST2_DIR})\
 $(parse_git_minimal)\n\
 ${BARCOL}\
-${RED}${VIRTENV} \[\033[1;1;32m\]$ ${TERGREEN}"
+${RED}${VIRTENV} ${ERRPROMPT}${TERGREEN}"
 }
 
     else # $SET_FULL_PROMPT != "yes" or "mid"

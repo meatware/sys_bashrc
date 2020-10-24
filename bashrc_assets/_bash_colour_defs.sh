@@ -2,6 +2,9 @@
 # http://bitmote.com/index.php?post/2012/11/19/Using-ANSI-Color-Codes-to-Colorize-Your-Bash-Prompt-on-Linux
 # http://blog.taylormcgann.com/tag/prompt-color/
 
+# terminal color compatibility
+# https://misc.flogisoft.com/bash/tip_colors_and_formatting
+
 # more: https://github.com/prgmrcom/ansible-bash-color-prompt/blob/master/templates/colorprompt.sh.j2
 NOCOL="\e[m"  # Color Reset
 
