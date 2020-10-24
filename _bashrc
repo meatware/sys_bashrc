@@ -264,7 +264,7 @@ PROMPT_COMMAND="prompt_command"
 
 # Entry for directory autojump: https://github.com/wting/autojump
 # needs to be at end
-# [[ -s ${HOME}/.autojump/etc/profile.d/autojump.sh ]] && source ${HOME}/.autojump/etc/profile.d/autojump.sh
+[[ -s ${HOME}/.autojump/etc/profile.d/autojump.sh ]] && source ${HOME}/.autojump/etc/profile.d/autojump.sh
 
 
 #####################################################
