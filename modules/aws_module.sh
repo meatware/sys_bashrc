@@ -1,3 +1,5 @@
+cite about-plugin
+about-plugin 'AWS helper functions'
 
 # from bash-it
 

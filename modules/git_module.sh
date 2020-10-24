@@ -1,3 +1,6 @@
+cite about-plugin
+about-plugin 'git helper functions'
+
 function git_remote {
   about 'adds remote $GIT_HOSTING:$1 to current repo'
   group 'git'
@@ -273,6 +276,9 @@ function gitignore-reload() {
 
 
 function git_greedy_get() {
+  about 'Pulls all existing remote brachches when executed in an existing git repo'
+  group 'git'
+  example '$ git_greedy_get'
   # https://stackoverflow.com/questions/10312521/how-to-fetch-all-git-branches
   git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
   git fetch --all

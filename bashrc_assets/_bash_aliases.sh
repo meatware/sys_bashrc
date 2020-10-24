@@ -67,7 +67,6 @@ alias fgrep='fgrep --color=auto'
 alias quick-ssh='ssh -Y -C -c blowfish-cbc,arcfour username@yourhost.com'
 alias edbash='gedit ~/.bashrc ~/sys_bashrc/bashrc_assets/*.sh &'
 alias F5='source ~/.bashrc'
-alias his='history'
 
 
 alias bast="ssh -A user@bastion.firmstep.com"

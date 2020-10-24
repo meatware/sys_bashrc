@@ -1,3 +1,6 @@
+cite 'about-alias'
+about-alias 'docker abbreviations'
+
 ###################################################
 # from bash-it
 alias dk='docker'

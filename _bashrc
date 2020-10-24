@@ -82,13 +82,25 @@ fi
 ################ Set SHELL Options ##################
 #####################################################
 
+
+# enter a few characters and press UpArrow/DownArrow
+# to search backwards/forwards through the history
+if [[ ${SHELLOPTS} =~ (vi|emacs) ]]
+then
+    # https://codeinthehole.com/tips/the-most-important-command-line-tip-incremental-history-searching-with-inputrc/
+    bind '"\e[A":history-search-backward'
+    bind '"\e[B":history-search-forward'
+    bind '"\e[C":forward-char'
+    bind '"\e[D":backward-char'
+fi
+##########################################
 # history guide: https://www.digitalocean.com/community/tutorials/how-to-use-bash-history-commands-and-expansions-on-a-linux-vps
+
 HISTCONTROL=ignoreboth                   # don't put duplicate lines or lines starting with space in the history.
 export HISTSIZE=100000                   # big big history
 export HISTFILESIZE=100000               # big big history
 shopt -s histappend
 # shopt -s cmdhist # save all lines of a multiple-line command in the same history entry <- really bad idea
-
 shopt -s cdspell # corrects minor cd spelling errors
 # shopt -s cdable_vars # non-dir args supplied to cd are assumned to be vars
 shopt -s no_empty_cmd_completion # tell bash/completion to NOT try completion for an empty entry

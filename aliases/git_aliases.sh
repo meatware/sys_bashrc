@@ -1,3 +1,6 @@
+cite 'about-alias'
+about-alias 'common git abbreviations'
+
 #########################
 alias gdiffh='git diff HEAD'
 alias gpllo='git pull origin'
