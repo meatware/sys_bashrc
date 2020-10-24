@@ -1,5 +1,5 @@
 
-function check_integer() {
+function _check_integer() {
     local MYINT="$1"
     ### If not an integer - default to theme val 0
     local REX=^[0-9]*$
@@ -13,7 +13,7 @@ function check_integer() {
     fi
 }
 
-function check_theme_range() {
+function _check_theme_range() {
     local MYINT="$1"
     local MAX_LEN="$2"
     ### If not an integer - default to theme val 0
@@ -32,10 +32,10 @@ function colsw(){
     local NEWCOL_IDX=${1}
 
     ### If not an integer - default to theme val 0
-    local NEWCOL_IDX=$(check_integer "${NEWCOL_IDX}")
+    local NEWCOL_IDX=$(_check_integer "${NEWCOL_IDX}")
 
     ### check if integer is between 0 and number of max theme array index (in _bash_colour_defs.sh)
-    local NEWCOL_IDX=$(check_theme_range "${NEWCOL_IDX}" "$BARCOL_ARR_LEN")
+    local NEWCOL_IDX=$(_check_theme_range "${NEWCOL_IDX}" "$BARCOL_ARR_LEN")
 
     ### create failsafe-backup first
     cp ${HOME}/sys_bashrc/theme_settings.sh ${HOME}/sys_bashrc/theme_settings_BACKUP.sh
@@ -117,10 +117,10 @@ function colsw_path(){
     local NEWPATH_IDX=${1}
 
     ### If not an integer - default to theme val 0
-    NEWPATH_IDX=$(check_integer "${NEWPATH_IDX}")
+    NEWPATH_IDX=$(_check_integer "${NEWPATH_IDX}")
 
     ### check if integer is between 0 and number of max theme array index (in _bash_colour_defs.sh)
-    NEWPATH_IDX=$(check_theme_range "${NEWPATH_IDX}" "$PATHCOLS_ARR_LEN")
+    NEWPATH_IDX=$(_check_theme_range "${NEWPATH_IDX}" "$PATHCOLS_ARR_LEN")
 
     ### create failsafebackup first
     cp ${HOME}/sys_bashrc/theme_settings.sh ${HOME}/sys_bashrc/theme_settings_BACKUP.sh

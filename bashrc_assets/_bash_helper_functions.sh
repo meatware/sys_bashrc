@@ -10,8 +10,6 @@ function check_new_bashrc_vers() {
     echo -e "\n${PureCHATREU}Your bashrc is ${PureBRed}${BC_BEHIND} ${PureCHATREU}commits behind origin/master and ${PureBBlue}${BC_AHEAD} ${PureCHATREU}commits ahead\n${NOCOL}"
 }
 
-
-
 function gedit(){ command gedit "$@" &>/dev/null & }
 
 function nomacs(){ command nomacs "$@" &>/dev/null & }
