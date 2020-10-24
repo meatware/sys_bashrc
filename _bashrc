@@ -1,5 +1,13 @@
 # .bashrc
 
+#####################################################
+## profile slow .bashrc code - part 1/2
+## https://www.rosipov.com/blog/profiling-slow-bashrc/s
+# PS4='+ $(date "+%s.%N")\011 '
+# exec 3>&2 2>/tmp/bashstart.$$.log
+# set -x
+#####################################################
+
 # Source global definitions
 
 # Set default editor
@@ -83,77 +91,77 @@ fi
 bind 'set show-all-if-ambiguous on'
 bind 'set colored-completion-prefix on'
 
-force_color_prompt=yes
-if [ -n "$force_color_prompt" ]; then
+force_color_prompt="" #"yes"
+if [ -z "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-    # We have color support; assume it's compliant with Ecma-48
-    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-    # a case would tend to support setf rather than setaf.)
-    color_prompt=yes
+        # We have color support; assume it's compliant with Ecma-48
+        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+        # a case would tend to support setf rather than setaf.)
+        color_prompt=yes
     else
-    color_prompt=
+        color_prompt=
     fi
 fi
 
 # SET_FULL_PROMPT" # set in theme_settings.sh
-if [ "$SET_FULL_PROMPT" == "yes" ] && [ "$color_prompt" == "yes" ] ; then
-    function prompt_command() {
-        ###################################################
-        ### identify success/fail status of last command
-        ### DO NOT MOVE THIS VARIABLE: must be first!
-        local last_status="$?"
-        ###################################################
-        ###################################################
-        #timer_stop
-        ###################################################
-        ###################################################
-        ### Setup if else for different color themes
-        PATH_COL_VAR="${SET_PATHCOL_VAR}"
-        PATH_COL="${SET_PATHCOL}"
-        THEME_VAR="${SET_THEME_VAR}"
-        BARCOL="${SET_BARCOL}"
-        TXTCOL="${SET_TXTCOL}"
+if [ "$color_prompt" == "yes" ]; then
+    if [ "$SET_FULL_PROMPT" == "yes" ] ; then
+        function prompt_command() {
+            # Custom fully featured 3 line prompt with most git support
 
-        ###################################################
-        ### Turn the prompt symbol red if the user is root
-        ### root stuff
-        if [[ $(id -u) -eq 0 ]]; then
-            ### root color
-            BARCOL="${MORANGE}"
-            TXTCOL="${RED}"
-            local ENDBIT="#"
-        else
-            local ENDBIT="$"
-        fi # root bit
+            ###################################################
+            ### identify success/fail status of last command
+            ### DO NOT MOVE THIS VARIABLE: must be first!
+            local last_status="$?"
+            ###################################################
+            ###################################################
+            ### Setup if else for different color themes
+            PATH_COL_VAR="${SET_PATHCOL_VAR}"
+            PATH_COL="${SET_PATHCOL}"
+            THEME_VAR="${SET_THEME_VAR}"
+            BARCOL="${SET_BARCOL}"
+            TXTCOL="${SET_TXTCOL}"
 
-        ###################################################
-        ### Display virtual environment notification  if applicable
-        ## disable the default virtualenv prompt change
-        export VIRTUAL_ENV_DISABLE_PROMPT=1
+            ###################################################
+            ### Turn the prompt symbol red if the user is root
+            ### root stuff
+            if [[ $(id -u) -eq 0 ]]; then
+                ### root color
+                BARCOL="${MORANGE}"
+                TXTCOL="${RED}"
+                local ENDBIT="#"
+            else
+                local ENDBIT="$"
+            fi # root bit
 
-        VIRTENV=$(virtualenv_info)
+            ###################################################
+            ### Display virtual environment notification  if applicable
+            ## disable the default virtualenv prompt change
+            export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-        ### Display ssh variable notification in prompt if applicable
-        SSH_SESSION=$(ssh_info)
+            VIRTENV=$(virtualenv_info)
 
-        ### Display AWS profile if applicable
-        CURR_AWS_PROFILE=$(aws_info)
+            ### Display ssh variable notification in prompt if applicable
+            SSH_SESSION=$(ssh_info)
 
-        # Display tty no in prompt
-        local TTY_VAR=`tty 2> /dev/null | awk -F/ '{nlast = NF 0;print $nlast$NF": "}'`
+            ### Display AWS profile if applicable
+            CURR_AWS_PROFILE=$(aws_info)
 
-        ###################################################
-        ### set color coded error string for prompt depending on success of last command
-        if [[ $last_status == 0 ]]; then
-            ERRPROMPT="\[\033[1;1;32m\]${ENDBIT} "
-        else
-            ERRPROMPT='\[\033[1;1;31m\]X '
-        fi
+            # Display tty no in prompt
+            local TTY_VAR=`tty 2> /dev/null | awk -F/ '{nlast = NF 0;print $nlast$NF": "}'`
 
-        ###################################################
-        ### set titlebar
-        local TITLEBAR=`pwdtail`
-        echo -ne '\033]2;'${TTY_VAR}${TITLEBAR}'\007'
+            ###################################################
+            ### set color coded error string for prompt depending on success of last command
+            if [[ $last_status == 0 ]]; then
+                ERRPROMPT="\[\033[1;1;32m\]${ENDBIT} "
+            else
+                ERRPROMPT='\[\033[1;1;31m\]X '
+            fi
+
+            ###################################################
+            ### set titlebar
+            local TITLEBAR=`pwdtail`
+            echo -ne '\033]2;'${TTY_VAR}${TITLEBAR}'\007'
 
 ## move out of indented tabs to avoid formatting horror (still in function)
 PS1="${debian_chroot:+($debian_chroot)}\n\
@@ -170,53 +178,57 @@ ${BARCOL}─\
 ${ERRPROMPT}${TERGREEN}"
 }
 
-# elif [ "$SET_FULL_PROMPT" == "mid" ] && [ "$color_prompt" == "yes " ]; then
-#     function prompt_command() {
-#         PATH_COL_VAR="${SET_PATHCOL_VAR}"
-#         PATH_COL="${SET_PATHCOL}"
-#         THEME_VAR="${SET_THEME_VAR}"
-#         BARCOL="${SET_BARCOL}"
-#         TXTCOL="${SET_TXTCOL}"
-
-#         ###################################################
-#         ### Display virtual environment notification  if applicable
-#         ## disable the default virtualenv prompt change
-#         export VIRTUAL_ENV_DISABLE_PROMPT=1
-
-#         VIRTENV=$(virtualenv_min_info)
-
-#         ### Display ssh variable notification in prompt if applicable
-#         SSH_SESSION=$(ssh_info)
-
-#         ### get parent directory
-#         FULL_PATH=$(pwd)
-#         LAST2_DIR=${FULL_PATH#"${FULL_PATH%/*/*}/"}
-
-#         #DRIVE_PATH=$(df . | tail -1 | awk '{print $1}')
-#         #DRIVE_ID=${DRIVE_PATH#"${DRIVE_PATH%/*}/"}
-
-# ## move out of indented tabs to avoid formatting horror (still in function)
-# PS1="${debian_chroot:+($debian_chroot)}\n\
-# ${BARCOL}\
-# ${TXTCOL}(`date +"%H:%M"`)${BARCOL}─${TXTCOL}(\u@\H)\
-# ${BARCOL}─${GRAY}(${GRAY}${LAST2_DIR})\
-# $(parse_git_minimal)\n\
-# ${BARCOL}\
-# ${RED}${VIRTENV} \[\033[1;1;32m\]$ ${TERGREEN}"
-# }
-
-else
-    if [ "$color_prompt" = yes ]; then
+    elif [ "$SET_FULL_PROMPT" == "mid" ]; then
         function prompt_command() {
+            # Custom partially featured 2 line prompt with minimal git support
+            PATH_COL_VAR="${SET_PATHCOL_VAR}"
+            PATH_COL="${SET_PATHCOL}"
+            THEME_VAR="${SET_THEME_VAR}"
+            BARCOL="${SET_BARCOL}"
+            TXTCOL="${SET_TXTCOL}"
+
+            ###################################################
+            ### Display virtual environment notification  if applicable
+            ## disable the default virtualenv prompt change
+            export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+            VIRTENV=$(virtualenv_min_info)
+
+            ### Display ssh variable notification in prompt if applicable
+            SSH_SESSION=$(ssh_info)
+
+            ### get parent directory
+            FULL_PATH=$(pwd)
+            LAST2_DIR=${FULL_PATH#"${FULL_PATH%/*/*}/"}
+
+            #DRIVE_PATH=$(df . | tail -1 | awk '{print $1}')
+            #DRIVE_ID=${DRIVE_PATH#"${DRIVE_PATH%/*}/"}
+
+## move out of indented tabs to avoid formatting horror (still in function)
+PS1="${debian_chroot:+($debian_chroot)}\n\
+${BARCOL}\
+${TXTCOL}(`date +"%H:%M"`)${BARCOL}─${TXTCOL}(\u@\H)\
+${BARCOL}─${GRAY}(${GRAY}${LAST2_DIR})\
+$(parse_git_minimal)\n\
+${BARCOL}\
+${RED}${VIRTENV} \[\033[1;1;32m\]$ ${TERGREEN}"
+}
+
+    else # $SET_FULL_PROMPT != "yes" or "mid"
+        function prompt_command() {
+            # basic ubuntu color prompt
             PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
         }
-    else
-        function prompt_command() {
-            PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-        }
+        #unset color_prompt force_color_prompt
     fi
-    unset color_prompt force_color_prompt
+else # color_prompt !="yes"
+    function prompt_command() {
+        # very basic ubuntu non-color prompt
+        PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    }
+    #unset color_prompt force_color_prompt
 fi
+
 
 #################################################################
 #################################################################
@@ -236,9 +248,11 @@ PROMPT_COMMAND="prompt_command"
 
 # Entry for directory autojump: https://github.com/wting/autojump
 # needs to be at end
-[[ -s ${HOME}/.autojump/etc/profile.d/autojump.sh ]] && source ${HOME}/.autojump/etc/profile.d/autojump.sh
+# [[ -s ${HOME}/.autojump/etc/profile.d/autojump.sh ]] && source ${HOME}/.autojump/etc/profile.d/autojump.sh
 
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#####################################################
+## profile slow .bashrc code - part 2/2
+# set +x
+# exec 2>&3 3>&-
+#####################################################
