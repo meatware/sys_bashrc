@@ -28,9 +28,9 @@ cite _about _param _example _group _author _version
 . "${HOME}/sys_bashrc/bashrc_assets/_bash_helper_functions.sh"
 . "${HOME}/sys_bashrc/bashrc_assets/_bash_colour_defs.sh"
 . "${HOME}/sys_bashrc/bashrc_assets/_bash_git_functions.sh"
-. "${HOME}/sys_bashrc/bashrc_assets/_bash_aliases.sh"
 
 # source aliases
+. "${HOME}/sys_bashrc/aliases/_bash_aliases.sh"
 . "${HOME}/sys_bashrc/aliases/docker_aliases.sh"
 . "${HOME}/sys_bashrc/aliases/docker-compose_aliases.sh"
 . "${HOME}/sys_bashrc/aliases/git_aliases.sh"
