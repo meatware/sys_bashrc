@@ -36,7 +36,7 @@ cite _about _param _example _group _author _version
 . "${HOME}/sys_bashrc/aliases/git_aliases.sh"
 . "${HOME}/sys_bashrc/aliases/apt_aliases.sh"
 . "${HOME}/sys_bashrc/aliases/terraform_aliases.sh"
-if _command_exists kubectl; then
+if $(which kubectl); then
     . "${HOME}/sys_bashrc/aliases/apt_aliases.sh"
 fi
 
@@ -61,10 +61,12 @@ fi
 # source bash modules
 . "${HOME}/sys_bashrc/modules/aws_module.sh"
 . "${HOME}/sys_bashrc/modules/base_module.sh"
+. "${HOME}/sys_bashrc/modules/extract.sh"
 . "${HOME}/sys_bashrc/modules/docker_module.sh"
 . "${HOME}/sys_bashrc/modules/docker-compose_module.sh"
 . "${HOME}/sys_bashrc/modules/git_module.sh"
 . "${HOME}/sys_bashrc/modules/history_module.sh"
+. "${HOME}/sys_bashrc/modules/installer_module.sh"
 
 #################################################################
 # make less more friendly for non-text input files, see lesspipe
