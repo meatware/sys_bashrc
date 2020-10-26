@@ -20,7 +20,7 @@ function get-latest-gh-release {
 
 	wget -q -nv -O "/tmp/${REL_FILE}" $LNX_AMD64_RELEASE_URL
 	if [ ! -f "/tmp/${REL_FILE}" ]; then
-		echo -e "\nDidn't download $LNX_AMD64_RELEASE_URL properly.  Where is /tmp/${REL_FILENAME}?"
+		echo -e "\nDidn't download $LNX_AMD64_RELEASE_URL properly.  Where is /tmp/${REL_FILE}?"
         exit 1
 	fi
 
