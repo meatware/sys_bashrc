@@ -17,6 +17,7 @@ function get-latest-gh-release {
     local LNX_AMD64_RELEASE_URL=$(wget -q -nv -O- "https://api.github.com/repos/$GITHUB_USER/$GITHUB_REPO/releases/latest" 2>/dev/null |  jq -r '.assets[] | select(.browser_download_url | contains("linux-amd64")) | .browser_download_url')
 
     local REL_FILE=$(basename $LNX_AMD64_RELEASE_URL)
+    echo "Release file is: $REL_FILE"
 
 	wget -q -nv -O "/tmp/${REL_FILE}" $LNX_AMD64_RELEASE_URL
 	if [ ! -f "/tmp/${REL_FILE}" ]; then
