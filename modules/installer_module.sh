@@ -18,14 +18,15 @@ function get-latest-gh-release {
 
     local REL_FILE=$(basename $LNX_AMD64_RELEASE_URL)
 
-	wget -q -nv -O "/tmp/${REL_FILENAME}" $LNX_AMD64_RELEASE_URL
-	if [ ! -f "/tmp/${REL_FILENAME}" ]; then
+	wget -q -nv -O "/tmp/a${REL_FILE}" $LNX_AMD64_RELEASE_URL
+	if [ ! -f "/tmp/${REL_FILE}" ]; then
 		echo -e "\nDidn't download $LNX_AMD64_RELEASE_URL properly.  Where is /tmp/${REL_FILENAME}?"
+        exit 1
 	fi
 
-    echo "Now extracting $REL_FILENAME to /tmp"
+    echo "Now extracting $REL_FILE to /tmp"
     cd /tmp
-    extract $REL_FILENAME
+    extract $REL_FILE
     # As github release packaging style varies - have a look at the uncompressed file and copy
     # correct file(s) using install-usr-local
 }
