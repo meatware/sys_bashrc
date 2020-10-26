@@ -14,8 +14,9 @@ alias gh='history | grep ' # grep all history
 #   ghf {command}
 #  Execute {command-number} after a call to ghf
 #   !! {command-number}
+
 function hist_nlines {
-    about 'Get last N entries from bash history. Defauklt withoutarguments is a 100 lines'
+    about 'Get last N entries from bash history. N default is 100 lines'
     group 'history'
     param '1: An integer corresponding to the number of history lines to tail'
     example '$ hist_nlines 200'
@@ -62,7 +63,7 @@ histdel(){
     about 'Delete lines of history between N -> N+n. Excluding histdel iteself.'
     group 'history'
     param '1: starting line to delete'
-    param '1: ending line to delete'
+    param '2: ending line to delete'
     example '$ histdel 1000 1033'
 
     for h in $(seq $1 $2 | tac); do
@@ -77,8 +78,6 @@ histdeln() {
     group 'history'
     param '1: Number of lines to delete'
     example '$ histdeln 10'
-
-    # deletes the last n lines of history including del history command
 
     # Get the current history number
     n=$(history 1 | awk '{print $1}')
