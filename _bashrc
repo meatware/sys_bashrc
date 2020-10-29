@@ -24,17 +24,20 @@ cite _about _param _example _group _author _version
 
 # Source bashrc assets
 . "${HOME}/sys_bashrc/theme_settings.sh"
-. "${HOME}/sys_bashrc/bashrc_assets/_bash_colour_functions.sh"
-. "${HOME}/sys_bashrc/bashrc_assets/_bash_helper_functions.sh"
-. "${HOME}/sys_bashrc/bashrc_assets/_bash_colour_defs.sh"
-. "${HOME}/sys_bashrc/bashrc_assets/_bash_git_functions.sh"
+. "${HOME}/sys_bashrc/bashrc_assets/internal_colour_functions.sh"
+. "${HOME}/sys_bashrc/bashrc_assets/internal_helper_functions.sh"
+. "${HOME}/sys_bashrc/bashrc_assets/internal_colour_defs.sh"
+. "${HOME}/sys_bashrc/bashrc_assets/internal_git_functions.sh"
 
 # source aliases
 . "${HOME}/sys_bashrc/aliases/_bash_aliases.sh"
 . "${HOME}/sys_bashrc/aliases/docker_aliases.sh"
 . "${HOME}/sys_bashrc/aliases/docker-compose_aliases.sh"
 . "${HOME}/sys_bashrc/aliases/git_aliases.sh"
-. "${HOME}/sys_bashrc/aliases/apt_aliases.sh"
+if [ -x $(which apt) ]; then
+    . "${HOME}/sys_bashrc/aliases/apt_aliases.sh"
+fi
+#
 . "${HOME}/sys_bashrc/aliases/terraform_aliases.sh"
 if $(which kubectl); then
     . "${HOME}/sys_bashrc/aliases/apt_aliases.sh"

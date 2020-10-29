@@ -15,7 +15,7 @@ alias gh='history | grep ' # grep all history
 #  Execute {command-number} after a call to ghf
 #   !! {command-number}
 
-function hist_nlines {
+function hist_nlines() {
     about 'Get last N entries from bash history. N default is 100 lines'
     group 'history'
     param '1: An integer corresponding to the number of history lines to tail'
@@ -26,23 +26,23 @@ function hist_nlines {
     history | tail -n $num_lines;
 }
 
-function grep_history {
+function grep_history() {
     about 'Grep bash history'
     group 'history'
-    example '$ grep_history mkdir'
+    example '$ grep_history ls'
 
     history | grep "$1" ;
 }
 
-function _chop_first_column { awk '{for (i=2; i<NF; i++) printf $i " "; print $NF}' ; }
+function _chop_first_colum() { awk '{for (i=2; i<NF; i++) printf $i " "; print $NF}' ; }
 
-function _add_line_numbers { awk '{print NR " " $0}' ; }
+function _add_line_numbers() { awk '{print NR " " $0}' ; }
 
-function _top_ten { sort | uniq -c | sort -r | head -n 10 ; }
+function _top_ten() { sort | uniq -c | sort -r | head -n 10 ; }
 
-function _unique_history { _chop_first_column | _top_ten | _chop_first_column | _add_line_numbers ; }
+function _unique_history() { _chop_first_column | _top_ten | _chop_first_column | _add_line_numbers ; }
 
-function ghf {
+function ghf() {
     about 'Grep bash history Function'
     group 'history'
     param '1: With no args supplied, ghf returns the top 10 most used commands'
@@ -59,7 +59,7 @@ function ghf {
 
 ################################################
 # https://stackoverflow.com/questions/14750650/how-to-delete-history-of-last-10-commands-in-shell
-histdel(){
+function histdel() {
     about 'Delete lines of history between N -> N+n. Excluding histdel iteself.'
     group 'history'
     param '1: starting line to delete'
@@ -73,7 +73,7 @@ histdel(){
 }
 
 
-histdeln() {
+function histdeln() {
     about 'Delete last N lines of history including histdeln'
     group 'history'
     param '1: Number of lines to delete'

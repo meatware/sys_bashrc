@@ -4,10 +4,10 @@ about-alias 'common git abbreviations'
 #########################
 alias gdiffh='git diff HEAD'
 alias gpllo='git pull origin'
-alias gpllocb='git pull origin $(git rev-parse --abbrev-ref HEAD)'
+alias gpllocb='git pull origin $(git rev-parse --abbrev-ref HEAD)' # git pull origin current branch
 alias gp='git push'
 alias gpo='git push origin'
-alias gpocb='git push origin $(git rev-parse --abbrev-ref HEAD)'
+alias gpocb='git push origin $(git rev-parse --abbrev-ref HEAD)' # git push origin current branch
 #########################
 
 # https://stackoverflow.com/questions/37770467/why-do-i-have-to-git-push-set-upstream-origin-branch

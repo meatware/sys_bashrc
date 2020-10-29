@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+cite 'about-alias'
+about-alias 'Docker Completions'
+
 # shellcheck disable=SC2016,SC2119,SC2155,SC2206,SC2207
 #
 # Shellcheck ignore list:

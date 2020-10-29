@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+cite 'about-alias'
+about-alias 'Terraform completions'
+
 #
 # Bash completion for the terraform command
 #

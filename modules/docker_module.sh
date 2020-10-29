@@ -1,4 +1,4 @@
-#cite about-plugin
+cite about-plugin
 about-plugin 'Helpers to more easily work with Docker'
 
 function docker-remove-most-recent-container() {
