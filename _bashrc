@@ -34,12 +34,12 @@ cite _about _param _example _group _author _version
 . "${HOME}/sys_bashrc/aliases/docker_aliases.sh"
 . "${HOME}/sys_bashrc/aliases/docker-compose_aliases.sh"
 . "${HOME}/sys_bashrc/aliases/git_aliases.sh"
-if [ -x $(which apt) ]; then
+if ! command -v apt &> /dev/null; then
     . "${HOME}/sys_bashrc/aliases/apt_aliases.sh"
 fi
 #
 . "${HOME}/sys_bashrc/aliases/terraform_aliases.sh"
-if $(which kubectl); then
+if ! command -v kubectl &> /dev/null; then
     . "${HOME}/sys_bashrc/aliases/apt_aliases.sh"
 fi
 

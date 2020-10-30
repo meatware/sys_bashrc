@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="giri">
+    <link rel="canonical" href="http://fillmein.com/aliases/git_aliases/">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>git_aliases - Sys Bashrc</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../custom_css/extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "common git abbreviations", url: "#_top", children: [
+              {title: "Aliases", url: "#aliases" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../docker_aliases/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../docker_aliases/" class="btn btn-xs btn-link">
+        docker_aliases
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../.." class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../.." class="btn btn-xs btn-link">
+        Home
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="common-git-abbreviations">common git abbreviations</h1>
+<p><strong><em>(in /home/bsgt/sys_bashrc/aliases/git_aliases.sh)</em></strong></p>
+<h2 id="aliases">Aliases</h2>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>Alias Name</strong></th>
+<th align="center"><strong>Code</strong></th>
+<th align="right"><strong>Descripion</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>gdiffh</strong></td>
+<td align="center"><code>git diff HEAD</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gpllo</strong></td>
+<td align="center"><code>git pull origin</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gpllocb</strong></td>
+<td align="center"><code>git pull origin $(git rev-parse --abbrev-ref HEAD)'</code></td>
+<td align="right">git pull origin current branch</td>
+</tr>
+<tr>
+<td align="left"><strong>gp</strong></td>
+<td align="center"><code>git push</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gpo</strong></td>
+<td align="center"><code>git push origin</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gpocb</strong></td>
+<td align="center"><code>git push origin $(git rev-parse --abbrev-ref HEAD)'</code></td>
+<td align="right">git push origin current branch</td>
+</tr>
+<tr>
+<td align="left"><strong>gcl</strong></td>
+<td align="center"><code>git clone</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>ga</strong></td>
+<td align="center"><code>git add</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>grm</strong></td>
+<td align="center"><code>git rm</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gap</strong></td>
+<td align="center"><code>git add -p</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gall</strong></td>
+<td align="center"><code>git add -A</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gf</strong></td>
+<td align="center"><code>git fetch --all --prune</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gft</strong></td>
+<td align="center"><code>git fetch --all --prune --tags</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gfv</strong></td>
+<td align="center"><code>git fetch --all --prune --verbose</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gftv</strong></td>
+<td align="center"><code>git fetch --all --prune --tags --verbose</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gus</strong></td>
+<td align="center"><code>git reset HEAD</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gpristine</strong></td>
+<td align="center"><code>git reset --hard &amp;&amp; git clean -dfx</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gclean</strong></td>
+<td align="center"><code>git clean -fd</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gm</strong></td>
+<td align="center"><code>git merge</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gmv</strong></td>
+<td align="center"><code>git mv</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>g</strong></td>
+<td align="center"><code>git</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>get</strong></td>
+<td align="center"><code>git</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gs</strong></td>
+<td align="center"><code>git status</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gss</strong></td>
+<td align="center"><code>git status -s</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gsu</strong></td>
+<td align="center"><code>git submodule update --init --recursive</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gl</strong></td>
+<td align="center"><code>git pull</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>glum</strong></td>
+<td align="center"><code>git pull upstream master</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gpr</strong></td>
+<td align="center"><code>git pull --rebase</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gpp</strong></td>
+<td align="center"><code>git pull &amp;&amp; git push</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gup</strong></td>
+<td align="center"><code>git fetch &amp;&amp; git rebase</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gp</strong></td>
+<td align="center"><code>git push</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gpo</strong></td>
+<td align="center"><code>git push origin</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gpu</strong></td>
+<td align="center"><code>git push --set-upstream</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gpuo</strong></td>
+<td align="center"><code>git push --set-upstream origin</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gpuoc</strong></td>
+<td align="center"><code>git push --set-upstream origin $(git symbolic-ref --short HEAD)</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gpom</strong></td>
+<td align="center"><code>git push origin master</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gr</strong></td>
+<td align="center"><code>git remote</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>grv</strong></td>
+<td align="center"><code>git remote -v</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gra</strong></td>
+<td align="center"><code>git remote add</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gd</strong></td>
+<td align="center"><code>git diff</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gds</strong></td>
+<td align="center"><code>git diff --staged</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gdv</strong></td>
+<td align="center"><code>git diff -w "$@" | vim -R -</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gc</strong></td>
+<td align="center"><code>git commit -v</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gca</strong></td>
+<td align="center"><code>git commit -v -a</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gcm</strong></td>
+<td align="center"><code>git commit -v -m</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gcam</strong></td>
+<td align="center"><code>git commit -v -am</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gci</strong></td>
+<td align="center"><code>git commit --interactive</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gb</strong></td>
+<td align="center"><code>git branch</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gba</strong></td>
+<td align="center"><code>git branch -a</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gbt</strong></td>
+<td align="center"><code>git branch --track</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gbm</strong></td>
+<td align="center"><code>git branch -m</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gbd</strong></td>
+<td align="center"><code>git branch -d</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gbD</strong></td>
+<td align="center"><code>git branch -D</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gcount</strong></td>
+<td align="center"><code>git shortlog -sn</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gcp</strong></td>
+<td align="center"><code>git cherry-pick</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gcpx</strong></td>
+<td align="center"><code>git cherry-pick -x</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gco</strong></td>
+<td align="center"><code>git checkout</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gcom</strong></td>
+<td align="center"><code>git checkout master</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gcb</strong></td>
+<td align="center"><code>git checkout -b</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gcob</strong></td>
+<td align="center"><code>git checkout -b</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gct</strong></td>
+<td align="center"><code>git checkout --track</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gcpd</strong></td>
+<td align="center"><code>git checkout master; git pull; git branch -D</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gexport</strong></td>
+<td align="center"><code>git archive --format zip --output</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gdel</strong></td>
+<td align="center"><code>git branch -D</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gmu</strong></td>
+<td align="center"><code>git fetch origin -v; git fetch upstream -v; git merge upstream/master</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gll</strong></td>
+<td align="center"><code>git log --graph --prett</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gg</strong></td>
+<td align="center"><code>git log --graph --prett</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>ggs</strong></td>
+<td align="center"><code>gg --stat</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gsl</strong></td>
+<td align="center"><code>git shortlog -sn</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gwc</strong></td>
+<td align="center"><code>git whatchanged</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gt</strong></td>
+<td align="center"><code>git tag</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gta</strong></td>
+<td align="center"><code>git tag -a</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gtd</strong></td>
+<td align="center"><code>git tag -d</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gtl</strong></td>
+<td align="center"><code>git tag -l</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gpatch</strong></td>
+<td align="center"><code>git format-patch -1</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gnew</strong></td>
+<td align="center"><code>git log HEAD@{1}..HEAD@{0}</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gcaa</strong></td>
+<td align="center"><code>git commit -a --amend -C HEAD</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>ggui</strong></td>
+<td align="center"><code>git gui</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gcsam</strong></td>
+<td align="center"><code>git commit -S -am</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gst</strong></td>
+<td align="center"><code>git stash</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gstb</strong></td>
+<td align="center"><code>git stash branch</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gstd</strong></td>
+<td align="center"><code>git stash drop</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gstl</strong></td>
+<td align="center"><code>git stash list</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gstp</strong></td>
+<td align="center"><code>git stash pop</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>ght</strong></td>
+<td align="center"><code>cd "$(git rev-parse --show-toplevel)"</code></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left"><strong>gu</strong></td>
+<td align="center"><code>git ls-files . --exclude-standard --others</code></td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../docker_aliases/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../docker_aliases/" class="btn btn-xs btn-link">
+        docker_aliases
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../.." class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../.." class="btn btn-xs btn-link">
+        Home
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/meatware/sys_bashrc.git/edit/master/docs/aliases/git_aliases.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/meatware/sys_bashrc.git/">Windmill Dark</a> theme by giri (noraj).</p>
+</footer>
+
+</body>
+</html>
