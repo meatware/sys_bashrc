@@ -1,3 +1,6 @@
+cite 'about-alias'
+about-alias 'Internal PS prompt related git functions'
+
 ##################################
 ### git branch functions
 # check https://github.com/magicmonty/bash-git-prompt
@@ -7,22 +10,25 @@
 
 # https://github.com/arialdomartini/oh-my-git
 
-function parse_git() {
+function _parse_git() {
+    about 'Formats prompt: Calls functions to find various git attribiutes. See call graph.'
+    group 'internal'
+    example '_parse_git()'
 
     ### first check to see if we are in a git branch
-    git_str=$(find_git_branch)
+    git_str=$(_find_git_branch)
     if [[ ! -z "$git_str" ]]; then
         ### now check for git dirty state
-        git_str="${BARCOL}──${TXTCOL}[$(git_com_diff)${git_str}$(find_git_dirty)"
+        git_str="${BARCOL}──${TXTCOL}[$(_git_com_diff)${git_str}$(_find_git_dirty)"
 
         ### add git stats if applicable
-        git_str="${git_str}$(format_git_stats)"
+        git_str="${git_str}$(_format_git_stats)"
 
         ### add final closing bracket
         git_str="${git_str}${TXTCOL}]"
 
         ### add short commitid string
-        #git_str="${git_str}$(get_git_commid)"
+        #git_str="${git_str}$(_get_git_commid)"
 
         ### Final echo that PS prompt sees
         echo $git_str
@@ -31,19 +37,22 @@ function parse_git() {
     fi
 }
 
-function parse_git_minimal() {
+function _parse_git_minimal() {
+    about 'Formats prompt: Alternative option to _parse_git().'
+    group 'internal'
+    example '_parse_git_minimal()'
 
     ### first check to see if we are in a git branch
-    git_str=$(find_git_branch)
+    git_str=$(_find_git_branch)
     if [[ ! -z "$git_str" ]]; then
         ### now check for git dirty state
-        git_str="${BARCOL}─${TXTCOL}(${git_str}$(find_git_dirty)"
+        git_str="${BARCOL}─${TXTCOL}(${git_str}$(_find_git_dirty)"
 
         ### add final closing bracket
         git_str="${git_str}${TXTCOL})"
 
         ### add short commitid string
-        #git_str="${git_str}$(get_git_commid)"
+        #git_str="${git_str}$(_get_git_commid)"
 
         ### Final echo that PS prompt sees
         echo $git_str
@@ -53,7 +62,11 @@ function parse_git_minimal() {
 }
 
 #############################
-function find_git_branch() {
+function _find_git_branch() {
+    about 'Print git branch if in a repo'
+    group 'internal'
+    example '_find_git_branch()'
+
     # Based on: http://stackoverflow.com/a/13003854/170413
     local branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
     if [[ ! -z "$branch" ]]; then
@@ -70,7 +83,11 @@ function find_git_branch() {
 }
 
 #############################
-function get_git_commid() {
+function _get_git_commid() {
+    about 'Print current and previous commit id'
+    group 'internal'
+    example '_get_git_commid()'
+
     ### get current commit hash
     curr_commitid=$(git rev-parse --short HEAD 2> /dev/null)
     ### get previous commit hash
@@ -79,7 +96,11 @@ function get_git_commid() {
 }
 
 #############################
-function find_git_dirty() {
+function _find_git_dirty() {
+    about 'Mark with a dirty yellow star* if there are uncommitted/unstaged entities in git'
+    group 'internal'
+    example '_find_git_dirty()'
+
     gdirtstr=$(git status 2> /dev/null | tail -n1 | sed 's/,//' | awk '{print $1, $2, $3}')
     if [[ ${gdirtstr} == "nothing to commit" ]]
         then
@@ -94,7 +115,11 @@ function find_git_dirty() {
 }
 
 #############################
-function git_com_diff() {
+function _git_com_diff() {
+    about 'Calculate how far git branch is relative to origin. (Probably imperfect)'
+    group 'internal'
+    example '_git_com_diff()'
+
     ### Check how far git branch is relative to origin
     gbranchrel=$(git status 2> /dev/null | grep "Your branch is")
     gup=$(echo $gbranchrel 2> /dev/null | grep ahead)
@@ -114,7 +139,11 @@ function git_com_diff() {
 }
 
 #############################
-function format_git_stats() {
+function _format_git_stats() {
+    about 'Calcualte git stats & print out numbers to PS prompt indicating files taht are (u)ntracked, (a)dded, (m)odified, (am) & (d)deleted'
+    group 'internal'
+    example '_format_git_stats()'
+
     ##########################################
     gporcelain=$(git status --porcelain 2> /dev/null)
     untrN=$(echo $gporcelain | tr ' ' '\n' | grep -w '??' | wc -l) # untracked

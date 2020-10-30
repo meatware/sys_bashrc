@@ -1,3 +1,6 @@
+cite 'about-alias'
+about-alias 'Core BASH Aliases'
+
 function check_alias_clashes() {
 	about 'Check alias clashes'
 	group 'aliases'
@@ -50,7 +53,7 @@ alias .....='cd ../../../..'
 alias bashrc='cd ${HOME}/sys_bashrc; ll' # Switch to sys_bashrc directory in home and ls
 
 # Goes up a specified number of directories  (i.e. up 4)
-function up () {
+function up() {
 	about 'Go up N directories in the file path'
 	group 'aliases'
 	param '1: Integer corresponding to number of directories to go up.'
@@ -81,4 +84,4 @@ alias F5='source ~/.bashrc'
 
 ## df -
 alias df='df -x "squashfs"' # Stop showing mounted snap in file system
-alias dfraw='df"' # raw df with all options disabled
+alias dfraw='df' # raw df with all options disabled

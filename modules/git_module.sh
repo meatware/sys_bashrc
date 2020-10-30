@@ -1,7 +1,7 @@
 cite about-plugin
 about-plugin 'git helper functions'
 
-function git_remote {
+function git_remote() {
   about 'adds remote $GIT_HOSTING:$1 to current repo'
   group 'git'
 
@@ -9,7 +9,7 @@ function git_remote {
   git remote add origin $GIT_HOSTING:$1.git
 }
 
-function git_first_push {
+function git_first_push() {
   about 'push into origin refs/heads/master'
   group 'git'
 
@@ -36,51 +36,51 @@ function git_revert() {
   git reset --hard
 }
 
+function _is_clean() {
+  if [[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]]; then
+    echo "Your branch is dirty, please commit your changes"
+    kill -INT $$
+  fi
+}
+
+function _commit_exists() {
+  git rev-list --quiet $1
+  status=$?
+  if [ $status -ne 0 ]; then
+    echo "Commit ${1} does not exist"
+    kill -INT $$
+  fi
+}
+
+function _keep_changes() {
+  while true
+  do
+    read -p "Do you want to keep all changes from rolled back revisions in your working tree? [Y/N]" RESP
+    case $RESP
+    in
+    [yY])
+      echo "Rolling back to commit ${1} with unstaged changes"
+      git reset $1
+      break
+      ;;
+    [nN])
+      echo "Rolling back to commit ${1} with a clean working tree"
+      git reset --hard $1
+      break
+      ;;
+    *)
+      echo "Please enter Y or N"
+    esac
+  done
+}
+
 function git_rollback() {
   about 'resets the current HEAD to this commit'
   group 'git'
 
-  function is_clean() {
-    if [[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]]; then
-      echo "Your branch is dirty, please commit your changes"
-      kill -INT $$
-    fi
-  }
-
-  function commit_exists() {
-    git rev-list --quiet $1
-    status=$?
-    if [ $status -ne 0 ]; then
-      echo "Commit ${1} does not exist"
-      kill -INT $$
-    fi
-  }
-
-  function keep_changes() {
-    while true
-    do
-      read -p "Do you want to keep all changes from rolled back revisions in your working tree? [Y/N]" RESP
-      case $RESP
-      in
-      [yY])
-        echo "Rolling back to commit ${1} with unstaged changes"
-        git reset $1
-        break
-        ;;
-      [nN])
-        echo "Rolling back to commit ${1} with a clean working tree"
-        git reset --hard $1
-        break
-        ;;
-      *)
-        echo "Please enter Y or N"
-      esac
-    done
-  }
-
   if [ -n "$(git symbolic-ref HEAD 2> /dev/null)" ]; then
-    is_clean
-    commit_exists $1
+    _is_clean
+    _commit_exists $1
 
     while true
     do
@@ -88,7 +88,7 @@ function git_rollback() {
       case $RESP
         in
         [yY])
-          keep_changes $1
+          _keep_changes $1
           break
           ;;
         [nN])
@@ -156,7 +156,7 @@ function git_info() {
     fi
 }
 
-function git_stats {
+function git_stats() {
     about 'display stats per author'
     group 'git'
 
@@ -202,7 +202,7 @@ function gittowork() {
   about 'Places the latest .gitignore file for a given project type in the current directory, or concatenates onto an existing .gitignore'
   group 'git'
   param '1: the language/type of the project, used for determining the contents of the .gitignore file'
-  example '$ gittowork java'
+  example 'gittowork java'
 
   result=$(curl -L "https://www.gitignore.io/api/$1" 2>/dev/null)
 
@@ -224,7 +224,7 @@ function gittowork() {
 function gitignore-reload() {
   about 'Empties the git cache, and readds all files not blacklisted by .gitignore'
   group 'git'
-  example '$ gitignore-reload'
+  example 'gitignore-reload'
 
     # The .gitignore file should not be reloaded if there are uncommited changes.
   # Firstly, require a clean work tree. The function require_clean_work_tree()
@@ -278,7 +278,7 @@ function gitignore-reload() {
 function git_greedy_get() {
   about 'Pulls all existing remote brachches when executed in an existing git repo'
   group 'git'
-  example '$ git_greedy_get'
+  example 'git_greedy_get'
   # https://stackoverflow.com/questions/10312521/how-to-fetch-all-git-branches
   git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
   git fetch --all

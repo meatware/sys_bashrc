@@ -1,5 +1,8 @@
-function ips ()
-{
+cite about-plugin
+about-plugin 'Base module'
+
+
+function ips() {
     about 'display all ip addresses for this host'
     group 'base'
 
@@ -14,8 +17,7 @@ function ips ()
     fi
 }
 
-function down4me ()
-{
+function down4me() {
     about 'checks whether a website is down for you, or everybody'
     param '1: website url'
     example '$ down4me http://www.google.com'
@@ -24,8 +26,7 @@ function down4me ()
     curl -Ls "http://downforeveryoneorjustme.com/$1" | sed '/just you/!d;s/<[^>]*>//g'
 }
 
-function myip ()
-{
+function myip() {
     about 'displays your ip address, as seen by the Internet'
     group 'base'
 
@@ -41,8 +42,7 @@ function myip ()
     echo -e "Your public IP is: ${echo_bold_green} $res ${echo_normal}"
 }
 
-function pickfrom ()
-{
+function pickfrom() {
     about 'picks random line from file'
     param '1: filename'
     example '$ pickfrom /usr/share/dict/words'
@@ -55,8 +55,7 @@ function pickfrom ()
     head -n $n $file | tail -1
 }
 
-function passgen ()
-{
+function passgen() {
     about 'generates random password from dictionary words'
     param 'optional integer length'
     param 'if unset, defaults to 4'
@@ -70,8 +69,7 @@ function passgen ()
     echo "Without (use this as the password): $(echo $pass | tr -d ' ')"
 }
 
-function mkcd ()
-{
+function mkcd() {
     about 'make one or more directories and cd into the last one'
     param 'one or more directories to create'
     example '$ mkcd foo'
@@ -83,16 +81,14 @@ function mkcd ()
     mkdir -p -- "$@" && eval cd -- "\"\$$#\""
 }
 
-function lsgrep ()
-{
+function lsgrep() {
     about 'search through directory contents with grep'
     group 'base'
 
     ls | grep "$*"
 }
 
-function usage ()
-{
+function usage() {
     about 'disk usage per directory, in Mac OS X and Linux'
     param '1: directory name'
     group 'base'
@@ -113,8 +109,7 @@ function usage ()
     fi
 }
 
-function comex ()
-{
+function comex() {
     about 'checks for existence of a command'
     param '1: command to check'
     example '$ comex ls'
@@ -125,8 +120,7 @@ function comex ()
 
 
 # useful for administrators and configs
-function buf ()
-{
+function buf() {
     about 'back up file with timestamp'
     param 'filename'
     group 'base'

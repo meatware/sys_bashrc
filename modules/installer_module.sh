@@ -4,7 +4,7 @@ about-plugin 'Install additional packages'
 # GH_INSTALL_LIB = {{program-name: $GITHUB_USER,$GITHUB_REPO,$Description}}
 declare -A GH_INSTALL_LIB='([ccat]="owenthereal,ccat,coloured-cat")'
 
-function get-latest-gh-release {
+function get-latest-gh-release() {
     about 'Download & extract the latest package release from gihub releases page to /tmp. Use install-usr-local() to install correct file'
     group 'installers'
     param '1: package name. This is used to search an internal dictionary for github connection details'
@@ -33,7 +33,7 @@ function get-latest-gh-release {
 }
 
 
-function install-usr-local {
+function install-usr-local() {
     about 'Move program '
     group 'installers'
     param '1: Program file to move to /usr/local/bin. This function makes it executable '

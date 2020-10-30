@@ -34,12 +34,12 @@ cite _about _param _example _group _author _version
 . "${HOME}/sys_bashrc/aliases/docker_aliases.sh"
 . "${HOME}/sys_bashrc/aliases/docker-compose_aliases.sh"
 . "${HOME}/sys_bashrc/aliases/git_aliases.sh"
-if ! command -v apt &> /dev/null; then
+if command -v apt &> /dev/null; then
     . "${HOME}/sys_bashrc/aliases/apt_aliases.sh"
 fi
 #
 . "${HOME}/sys_bashrc/aliases/terraform_aliases.sh"
-if ! command -v kubectl &> /dev/null; then
+if command -v kubectl &> /dev/null; then
     . "${HOME}/sys_bashrc/aliases/apt_aliases.sh"
 fi
 
@@ -203,7 +203,7 @@ ${BARCOL}┌──\
 ${TXTCOL}[\u]\
 ${BARCOL}─\
 ${TXTCOL}[\H]\
-$(parse_git)\
+$(_parse_git)\
 ${VIRTENV}${SSH_SESSION}${CURR_AWS_PROFILE}
 ${BARCOL}│${DKGRAY}${TTY_VAR}${PATH_COL}> \w \
 \n${BARCOL}└──\
@@ -259,7 +259,7 @@ PS1="${debian_chroot:+($debian_chroot)}\n\
 ${BARCOL}\
 ${TXTCOL}(`date +"%H:%M"`)${BARCOL}─${TXTCOL}(\u@\H)\
 ${BARCOL}─${GRAY}(${GRAY}${LAST2_DIR})\
-$(parse_git_minimal)\n\
+$(_parse_git_minimal)\n\
 ${BARCOL}\
 ${RED}${VIRTENV} ${ERRPROMPT}${TERGREEN}"
 }
