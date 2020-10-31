@@ -1,4 +1,4 @@
-cite 'about-internal'
+cite about-internal
 about-internal 'PS prompt color definitions'
 
 # colors:

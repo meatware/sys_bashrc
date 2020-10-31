@@ -1,4 +1,4 @@
-cite 'about-internal'
+cite about-internal
 about-internal 'Internal bash helper functions'
 
 function check_new_bashrc_vers() {

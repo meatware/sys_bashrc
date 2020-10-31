@@ -1,4 +1,4 @@
-cite 'about-internal'
+cite about-internal
 about-internal 'Internal theme related functions'
 
 function _check_integer() {

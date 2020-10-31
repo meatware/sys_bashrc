@@ -1,4 +1,4 @@
-cite 'about-internal'
+cite about-internal
 about-internal 'Scrap functions'
 
 #################################################################

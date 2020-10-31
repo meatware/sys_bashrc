@@ -1,4 +1,4 @@
-cite 'about-internal'
+cite about-internal
 about-internal 'Internal PS prompt related git functions'
 
 ##################################
