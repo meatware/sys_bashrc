@@ -73,7 +73,7 @@ about-alias 'Docker Completions'
 __docker_previous_extglob_setting=$(shopt -p extglob)
 shopt -s extglob
 
-__docker_q() {
+function __docker_q() {
 	docker ${host:+--host "$host"} ${config:+--config "$config"} ${context:+--context "$context"} 2>/dev/null "$@"
 }
 
@@ -85,7 +85,7 @@ __docker_q() {
 # An optional first option `--id|--name` may be used to limit the
 # output to the IDs or names of matching items. This setting takes
 # precedence over the environment setting.
-__docker_configs() {
+function  __docker_configs() {
 	local format
 	if [ "$1" = "--id" ] ; then
 		format='{{.ID}}'
@@ -104,7 +104,7 @@ __docker_configs() {
 
 # __docker_complete_configs applies completion of configs based on the current value
 # of `$cur` or the value of the optional first option `--cur`, if given.
-__docker_complete_configs() {
+function __docker_complete_configs() {
 	local current="$cur"
 	if [ "$1" = "--cur" ] ; then
 		current="$2"
@@ -121,7 +121,7 @@ __docker_complete_configs() {
 # An optional first option `--id|--name` may be used to limit the
 # output to the IDs or names of matching items. This setting takes
 # precedence over the environment setting.
-__docker_containers() {
+function __docker_containers() {
 	local format
 	if [ "$1" = "--id" ] ; then
 		format='{{.ID}}'
@@ -140,7 +140,7 @@ __docker_containers() {
 # __docker_complete_containers applies completion of containers based on the current
 # value of `$cur` or the value of the optional first option `--cur`, if given.
 # Additional filters may be appended, see `__docker_containers`.
-__docker_complete_containers() {
+function __docker_complete_containers() {
 	local current="$cur"
 	if [ "$1" = "--cur" ] ; then
 		current="$2"
@@ -149,49 +149,49 @@ __docker_complete_containers() {
 	COMPREPLY=( $(compgen -W "$(__docker_containers "$@")" -- "$current") )
 }
 
-__docker_complete_containers_all() {
+function __docker_complete_containers_all() {
 	__docker_complete_containers "$@" --all
 }
 
 # shellcheck disable=SC2120
-__docker_complete_containers_removable() {
+function __docker_complete_containers_removable() {
 	__docker_complete_containers "$@" --filter status=created --filter status=exited
 }
 
-__docker_complete_containers_running() {
+function __docker_complete_containers_running() {
 	__docker_complete_containers "$@" --filter status=running
 }
 
 # shellcheck disable=SC2120
-__docker_complete_containers_stoppable() {
+function __docker_complete_containers_stoppable() {
 	__docker_complete_containers "$@" --filter status=running --filter status=paused
 }
 
 # shellcheck disable=SC2120
-__docker_complete_containers_stopped() {
+function __docker_complete_containers_stopped() {
 	__docker_complete_containers "$@" --filter status=exited
 }
 
 # shellcheck disable=SC2120
-__docker_complete_containers_unpauseable() {
+function __docker_complete_containers_unpauseable() {
 	__docker_complete_containers "$@" --filter status=paused
 }
 
-__docker_complete_container_names() {
+function __docker_complete_container_names() {
 	local containers=( $(__docker_q ps -aq --no-trunc) )
 	local names=( $(__docker_q inspect --format '{{.Name}}' "${containers[@]}") )
 	names=( "${names[@]#/}" ) # trim off the leading "/" from the container names
 	COMPREPLY=( $(compgen -W "${names[*]}" -- "$cur") )
 }
 
-__docker_complete_container_ids() {
+function __docker_complete_container_ids() {
 	local containers=( $(__docker_q ps -aq) )
 	COMPREPLY=( $(compgen -W "${containers[*]}" -- "$cur") )
 }
 
 # __docker_contexts returns a list of contexts without the special "default" context.
 # Completions may be added with `--add`, e.g. `--add default`.
-__docker_contexts() {
+function __docker_contexts() {
 	local add=()
 	while true ; do
 		case "$1" in
@@ -208,7 +208,7 @@ __docker_contexts() {
 	echo "${add[@]}"
 }
 
-__docker_complete_contexts() {
+function __docker_complete_contexts() {
 	local contexts=( $(__docker_contexts "$@") )
 	COMPREPLY=( $(compgen -W "${contexts[*]}" -- "$cur") )
 }

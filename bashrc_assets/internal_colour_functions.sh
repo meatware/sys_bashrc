@@ -2,6 +2,11 @@ cite 'about-alias'
 about-alias 'Internal theme related functions'
 
 function _check_integer() {
+    about 'Check if argument is an integer'
+    group 'internal'
+    param: 'A putative integer'
+    example '_check_integer 42'
+
     local MYINT="$1"
     ### If not an integer - default to theme val 0
     local REX=^[0-9]*$
@@ -16,6 +21,12 @@ function _check_integer() {
 }
 
 function _check_theme_range() {
+    about 'Check if argument is an integer between 0 --> N'
+    group 'internal'
+    param: '1. A test integer'
+    param: '2. Ma=x number in range'
+    example '_check_theme_range 56 1003'
+
     local MYINT="$1"
     local MAX_LEN="$2"
     ### If not an integer - default to theme val 0
@@ -28,7 +39,12 @@ function _check_theme_range() {
     fi
 }
 
-function colsw(){
+function colsw() {
+    about 'Switch PS1 prompt theme color scheme usining a integer, N. There is a upper limit to N'
+    group 'internal'
+    param: '1. A integer corresponding to a theme color scheme. See internal_colour_defs.sh'
+    example 'colsw 42'
+
     ## switches theme color set by $THEME_VAR vals
 
     local NEWCOL_IDX=${1}
@@ -113,8 +129,11 @@ BACON
     source ${HOME}/sys_bashrc/_bashrc
 }
 
-function colsw_path(){
-    ## switches path color set by $PATH_COL_VAR val
+function colsw_path() {
+    about 'Fine Tune PS1 prompt theme $PATH_COL_VAR val color scheme usinng a integer, N. There is a upper limit to N'
+    group 'internal'
+    param: '1. A integer corresponding to a theme color scheme. See internal_colour_defs.sh'
+    example 'colscolsw_path 2'
 
     local NEWPATH_IDX=${1}
 
@@ -142,6 +161,10 @@ CHEESE
 }
 
 function col_set_prompt_style() {
+    about 'Change prompt style between full (3-line), mid (2-line) & default (1-line primitive)'
+    group 'internal'
+    param '1. A integer from 1-3'
+    example 'col_set_prompt_style 1'
     local CHOICE="$1"
     if [[ "$CHOICE" =~ (full|mid) ]]; then
         #sed -i "s/SET_FULL_PROMPT=\".*\"/SET_FULL_PROMPT=\"${CHOICE}\"/" ${HOME}/sys_bashrc/theme_settings.sh
@@ -153,20 +176,32 @@ function col_set_prompt_style() {
 }
 
 function csp1() {
+    about 'Change prompt style to full 3-line glory'
+    group 'internal'
+    example 'csp1'
     col_set_prompt_style full
 }
 
 function csp2() {
+    about 'Change prompt style to experimental 2-line worrying'
+    group 'internal'
+    example 'csp2'
     col_set_prompt_style mid
 }
 
 function csp3() {
+    about 'Change prompt style to a basic 1-line primitive level (default)'
+    group 'internal'
+    example 'csp1'
     unset SET_FULL_PROMPT
     export SET_FULL_PROMPT=
     source ~/.bashrc
 }
 
-function col_cp_root(){
+function col_cp_root() {
+    about 'Copies .bashrc to root home on current machine. Only affects things if full color prompt is set'
+    group 'internal'
+    example 'col_cp_root'
     ## copies .bashrc to root home
     sudo mv /root/.bashrc /root/.your_old_bashrc
     sudo cp -rf ${HOME}/sys_bashrc /root/
@@ -175,15 +210,30 @@ function col_cp_root(){
     source /root/.bashrc
 }
 
-function col_ssh(){
+function col_ssh() {
+    about 'Copy sys_bashrc PS1 prompt to remote host via rsync'
+    group 'internal'
+    param: '${USERNAME}@${HOSTNAME}'
+    example 'col_ssh ubuntu@mywebserver.com'
     ## copies .bashrc to remote host specified by $1 commandline arg user@remotehost
     rsync -av ${HOME}/sys_bashrc ${1}:~/
     ssh -A "${1}" 'mv ~/.bashrc ~/.your_old_bashrc; ln -s ${HOME}/sys_bashrc/_bashrc ~/.bashrc'
 }
 
-#############################
-function virtualenv_min_info(){
-    # Get Virtual Env and display in prompt
+function _virtualenv_info() {
+    about 'Get Virtual Env and display in PS prompt (full version)'
+    group 'internal'
+    example '_virtualenv_min_info'
+
+    local venv=$(_virtualenv_min_info)
+    [[ -n "$venv" ]] && echo "${BARCOL}─${TXTCOL}[${HIRed}$venv${TXTCOL}]"
+}
+
+function _virtualenv_min_info() {
+    about 'Get Virtual Env and display in PS prompt (minimal version)'
+    group 'internal'
+    example '_virtualenv_min_info'
+
     if [[ -n "$VIRTUAL_ENV" ]]; then
         # Strip out the path and just leave the env name
         local venv="${VIRTUAL_ENV##*/}"
@@ -194,12 +244,10 @@ function virtualenv_min_info(){
     [[ -n "$venv" ]] && echo "$venv"
 }
 
-function virtualenv_info(){
-    local venv=$(virtualenv_min_info)
-    [[ -n "$venv" ]] && echo "${BARCOL}─${TXTCOL}[${HIRed}$venv${TXTCOL}]"
-}
-
-function ssh_info(){
+function _ssh_info() {
+    about 'Display ssh in PS prompt if current seesion is via ssh'
+    group 'internal'
+    example '_ssh_info'
     # Get ssh-sess info and display in prompt
     # if pstree -p | egrep --quiet --extended-regexp ".*sshd.*\($$\)"; then
     #     ssh_state="ssh"
@@ -210,7 +258,10 @@ function ssh_info(){
     [[ -n "$ssh_state" ]] && echo "${BARCOL}─${TXTCOL}[${HIRed}${ssh_state}${TXTCOL}]"
 }
 
-function aws_info(){
+function _aws_info() {
+    about 'Display the current AWS profile loaded in PS prompt'
+    group 'internal'
+    example '_aws_info'
     # Get aws profile info and display in prompt
     aws_profile="$(printenv AWS_PROFILE)"
     if [[ -n "${aws_profile}" ]]; then
@@ -224,6 +275,10 @@ function aws_info(){
 ##################################
 ### returns the last 2 fields of the working directory
 ## for display in terminal titlebar
-pwdtail () {
+function _pwdtail() {
+    about 'Display last two directories from `pwd` in PS prompt'
+    group 'internal'
+    example '_pwdtail'
+
     pwd | awk -F/ '{nlast = NF -1;print $nlast"/"$NF}' #TODO: Use for something?
 }

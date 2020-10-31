@@ -20,7 +20,7 @@ function _bootstrap_composure() {
     _determine_printf_cmd
 }
 
-function _get_composure_dir () {
+function _get_composure_dir() {
     if [ -n "$XDG_DATA_HOME" ]; then
 	echo "$XDG_DATA_HOME/composure"
     else
@@ -28,7 +28,7 @@ function _get_composure_dir () {
     fi
 }
 
-function _get_author_name () {
+function _get_author_name() {
     typeset name localname
     localname="$(git --git-dir "$(_get_composure_dir)/.git" config --get user.name)"
     for name in "$GIT_AUTHOR_NAME" "$localname"; do
@@ -39,11 +39,11 @@ function _get_author_name () {
     done
 }
 
-function _composure_keywords () {
+function _composure_keywords() {
     echo "about author example group param version"
 }
 
-function _letterpress () {
+function _letterpress() {
     typeset rightcol="$1" leftcol="${2:- }" leftwidth="${3:-20}"
 
     if [ -z "$rightcol" ]; then
@@ -62,7 +62,7 @@ function _determine_printf_cmd() {
     fi
 }
 
-function _longest_function_name_length () {
+function _longest_function_name_length() {
     echo "$1" | awk 'BEGIN{ maxlength=0 }
     {
     for(i=1;i<=NF;i++)
@@ -74,13 +74,13 @@ function _longest_function_name_length () {
     END{ print maxlength}'
 }
 
-function _temp_filename_for () {
+function _temp_filename_for() {
     typeset file=$(mktemp "/tmp/$1.XXXX")
     command rm "$file" 2>/dev/null     # ensure file is unlinked prior to use
     echo "$file"
 }
 
-function _prompt () {
+function _prompt() {
     typeset prompt="$1"
     typeset result
     case "$(_shell)" in
@@ -92,7 +92,7 @@ function _prompt () {
     echo "$result"
 }
 
-function _add_composure_file () {
+function _add_composure_file() {
     typeset func="$1"
     typeset file="$2"
     typeset operation="$3"
@@ -119,7 +119,7 @@ function _add_composure_file () {
     )
 }
 
-function _transcribe () {
+function _transcribe() {
     typeset func="$1"
     typeset file="$2"
     typeset operation="$3"
@@ -167,7 +167,7 @@ function _transcribe () {
     fi
 }
 
-function _typeset_functions () {
+function _typeset_functions() {
     # unfortunately, there does not seem to be a easy, portable way to list just the
     # names of the defined shell functions...
 
@@ -182,14 +182,14 @@ function _typeset_functions () {
     esac
 }
 
-function _typeset_functions_about () {
+function _typeset_functions_about() {
     typeset f
     for f in $(_typeset_functions); do
 	typeset -f -- "$f" | grep -qE "^about[[:space:]]|[[:space:]]about[[:space:]]" && echo -- "$f"
     done
 }
 
-function _shell () {
+function _shell() {
     # here's a hack I modified from a StackOverflow post:
     # get the ps listing for the current process ($$), and print the last column (CMD)
     # stripping any leading hyphens shells sometimes throw in there
@@ -205,12 +205,12 @@ function _generate_metadata_functions() {
     done
 }
 
-function _list_composure_files () {
+function _list_composure_files() {
     typeset composure_dir="$(_get_composure_dir)"
     [ -d "$composure_dir" ] && find "$composure_dir" -maxdepth 1 -name '*.inc'
 }
 
-function _load_composed_functions () {
+function _load_composed_functions() {
     # load previously composed functions into shell
     # you may disable this by adding the following line to your shell startup:
     # export LOAD_COMPOSED_FUNCTIONS=0
@@ -226,19 +226,18 @@ function _load_composed_functions () {
     done
 }
 
-function _strip_trailing_whitespace () {
+function _strip_trailing_whitespace() {
     sed -e 's/ \+$//'
 }
 
-function _strip_semicolons () {
+function _strip_semicolons() {
     sed -e 's/;$//'
 }
 
 
 # 'porcelain' functions
 
-function cite ()
-{
+function cite() {
     about 'creates one or more meta keywords for use in your functions'
     param 'one or more keywords'
     example '$ cite url username'
@@ -271,8 +270,7 @@ function cite ()
     done
 }
 
-function draft ()
-{
+function draft() {
     about 'wraps command from history into a new function, default is last command'
     param '1: name to give function'
     param '2: optional history line number'
@@ -322,8 +320,7 @@ function draft ()
     revise "$func"
 }
 
-function glossary ()
-{
+function glossary() {
     about 'displays help summary for all functions, or summary for a group of functions'
     param '1: optional, group name'
     example '$ glossary'
@@ -351,8 +348,7 @@ function glossary ()
     done
 }
 
-function metafor ()
-{
+function metafor() {
     about 'prints function metadata associated with keyword'
     param '1: meta keyword'
     example '$ typeset -f glossary | metafor example'
@@ -375,8 +371,7 @@ function metafor ()
 
 alias cref='reference '
 
-function reference ()
-{
+function reference(){
     about 'displays apidoc help for a specific function'
     param '1: function name'
     example '$ reference revise'
@@ -421,8 +416,7 @@ function reference ()
     fi
 }
 
-function revise ()
-{
+function revise() {
     about 'loads function into editor for revision'
     param '<optional> -e: revise version stored in ENV'
     param '1: name of function'
@@ -489,21 +483,20 @@ function revise ()
     command rm "$temp"
 }
 
-function write ()
-{
-about 'writes one or more composed function definitions to stdout'
-param 'one or more function names'
-example '$ write finddown foo'
-example '$ write finddown'
-group 'composure'
+function write() {
+    about 'writes one or more composed function definitions to stdout'
+    param 'one or more function names'
+    example '$ write finddown foo'
+    example '$ write finddown'
+    group 'composure'
 
-if [ -z "$1" ]; then
-    printf '%s\n' 'missing parameter(s)'
-    reference write
-    return
-fi
+    if [ -z "$1" ]; then
+        printf '%s\n' 'missing parameter(s)'
+        reference write
+        return
+    fi
 
-echo "#!/usr/bin/env ${SHELL##*/}"
+    echo "#!/usr/bin/env ${SHELL##*/}"
 
 # bootstrap metadata
 cat <<END
@@ -514,9 +507,9 @@ done
 unset f
 END
 
-# write out function definitons
-# shellcheck disable=SC2034
-typeset -f cite "$@"
+    # write out function definitons
+    # shellcheck disable=SC2034
+    typeset -f cite "$@"
 
 cat <<END
 main() {

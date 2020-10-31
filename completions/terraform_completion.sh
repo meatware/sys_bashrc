@@ -22,8 +22,7 @@ about-alias 'Terraform completions'
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-_terraform()
-{
+function _terraform() {
 	local cur prev words cword opts
 	_get_comp_words_by_ref -n : cur prev words cword
 	COMPREPLY=()

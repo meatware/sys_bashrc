@@ -22,13 +22,13 @@ about-alias 'docker-compose Completions'
 __docker_compose_previous_extglob_setting=$(shopt -p extglob)
 shopt -s extglob
 
-__docker_compose_q() {
+function __docker_compose_q() {
 	docker-compose 2>/dev/null "${top_level_options[@]}" "$@"
 }
 
 # Transforms a multiline list of strings into a single line string
 # with the words separated by "|".
-__docker_compose_to_alternatives() {
+function __docker_compose_to_alternatives() {
 	local parts=( $1 )
 	local IFS='|'
 	echo "${parts[*]}"
@@ -36,14 +36,14 @@ __docker_compose_to_alternatives() {
 
 # Transforms a multiline list of options into an extglob pattern
 # suitable for use in case statements.
-__docker_compose_to_extglob() {
+function __docker_compose_to_extglob() {
 	local extglob=$( __docker_compose_to_alternatives "$1" )
 	echo "@($extglob)"
 }
 
 # Determines whether the option passed as the first argument exist on
 # the commandline. The option may be a pattern, e.g. `--force|-f`.
-__docker_compose_has_option() {
+function __docker_compose_has_option() {
 	local pattern="$1"
 	for (( i=2; i < $cword; ++i)); do
 		if [[ ${words[$i]} =~ ^($pattern)$ ]] ; then
@@ -56,7 +56,7 @@ __docker_compose_has_option() {
 # Returns `key` if we are currently completing the value of a map option (`key=value`)
 # which matches the extglob passed in as an argument.
 # This function is needed for key-specific completions.
-__docker_compose_map_key_of_current_option() {
+function __docker_compose_map_key_of_current_option() {
         local glob="$1"
 
         local key glob_pos
@@ -79,7 +79,7 @@ __docker_compose_map_key_of_current_option() {
 }
 
 # suppress trailing whitespace
-__docker_compose_nospace() {
+function __docker_compose_nospace() {
 	# compopt is not available in ancient bash versions
 	type compopt &>/dev/null && compopt -o nospace
 }
@@ -88,25 +88,25 @@ __docker_compose_nospace() {
 # Outputs a list of all defined services, regardless of their running state.
 # Arguments for `docker-compose ps` may be passed in order to filter the service list,
 # e.g. `status=running`.
-__docker_compose_services() {
+function __docker_compose_services() {
 	__docker_compose_q ps --services "$@"
 }
 
 # Applies completion of services based on the current value of `$cur`.
 # Arguments for `docker-compose ps` may be passed in order to filter the service list,
 # see `__docker_compose_services`.
-__docker_compose_complete_services() {
+function __docker_compose_complete_services() {
 	COMPREPLY=( $(compgen -W "$(__docker_compose_services "$@")" -- "$cur") )
 }
 
 # The services for which at least one running container exists
-__docker_compose_complete_running_services() {
+function __docker_compose_complete_running_services() {
 	local names=$(__docker_compose_services --filter status=running)
 	COMPREPLY=( $(compgen -W "$names" -- "$cur") )
 }
 
 
-_docker_compose_build() {
+function _docker_compose_build() {
 	case "$prev" in
 		--build-arg)
 			COMPREPLY=( $( compgen -e -- "$cur" ) )
@@ -129,7 +129,7 @@ _docker_compose_build() {
 }
 
 
-_docker_compose_bundle() {
+function _docker_compose_bundle() {
 	case "$prev" in
 		--output|-o)
 			_filedir
@@ -141,7 +141,7 @@ _docker_compose_bundle() {
 }
 
 
-_docker_compose_config() {
+function _docker_compose_config() {
 	case "$prev" in
 		--hash)
 			if [[ $cur == \\* ]] ; then
@@ -157,7 +157,7 @@ _docker_compose_config() {
 }
 
 
-_docker_compose_create() {
+function _docker_compose_create() {
 	case "$cur" in
 		-*)
 			COMPREPLY=( $( compgen -W "--build --force-recreate --help --no-build --no-recreate" -- "$cur" ) )
@@ -169,7 +169,7 @@ _docker_compose_create() {
 }
 
 
-_docker_compose_docker_compose() {
+function _docker_compose_docker_compose() {
 	case "$prev" in
 		--tlscacert|--tlscert|--tlskey)
 			_filedir
@@ -203,7 +203,7 @@ _docker_compose_docker_compose() {
 }
 
 
-_docker_compose_down() {
+function _docker_compose_down() {
 	case "$prev" in
 		--rmi)
 			COMPREPLY=( $( compgen -W "all local" -- "$cur" ) )
@@ -222,7 +222,7 @@ _docker_compose_down() {
 }
 
 
-_docker_compose_events() {
+function _docker_compose_events() {
 	case "$prev" in
 		--json)
 			return
@@ -240,7 +240,7 @@ _docker_compose_events() {
 }
 
 
-_docker_compose_exec() {
+function _docker_compose_exec() {
 	case "$prev" in
 		--index|--user|-u|--workdir|-w)
 			return
@@ -258,11 +258,11 @@ _docker_compose_exec() {
 }
 
 
-_docker_compose_help() {
+function _docker_compose_help() {
 	COMPREPLY=( $( compgen -W "${commands[*]}" -- "$cur" ) )
 }
 
-_docker_compose_images() {
+function _docker_compose_images() {
 	case "$cur" in
 		-*)
 			COMPREPLY=( $( compgen -W "--help --quiet -q" -- "$cur" ) )
@@ -273,7 +273,7 @@ _docker_compose_images() {
 	esac
 }
 
-_docker_compose_kill() {
+function _docker_compose_kill() {
 	case "$prev" in
 		-s)
 			COMPREPLY=( $( compgen -W "SIGHUP SIGINT SIGKILL SIGUSR1 SIGUSR2" -- "$(echo $cur | tr '[:lower:]' '[:upper:]')" ) )
@@ -292,7 +292,7 @@ _docker_compose_kill() {
 }
 
 
-_docker_compose_logs() {
+function _docker_compose_logs() {
 	case "$prev" in
 		--tail)
 			return
@@ -310,7 +310,7 @@ _docker_compose_logs() {
 }
 
 
-_docker_compose_pause() {
+function _docker_compose_pause() {
 	case "$cur" in
 		-*)
 			COMPREPLY=( $( compgen -W "--help" -- "$cur" ) )
@@ -322,7 +322,7 @@ _docker_compose_pause() {
 }
 
 
-_docker_compose_port() {
+function _docker_compose_port() {
 	case "$prev" in
 		--protocol)
 			COMPREPLY=( $( compgen -W "tcp udp" -- "$cur" ) )
@@ -344,7 +344,7 @@ _docker_compose_port() {
 }
 
 
-_docker_compose_ps() {
+function _docker_compose_ps() {
 	local key=$(__docker_compose_map_key_of_current_option '--filter')
 	case "$key" in
 		source)
@@ -376,7 +376,7 @@ _docker_compose_ps() {
 }
 
 
-_docker_compose_pull() {
+function _docker_compose_pull() {
 	case "$cur" in
 		-*)
 			COMPREPLY=( $( compgen -W "--help --ignore-pull-failures --include-deps --no-parallel --quiet -q" -- "$cur" ) )
@@ -388,7 +388,7 @@ _docker_compose_pull() {
 }
 
 
-_docker_compose_push() {
+function _docker_compose_push() {
 	case "$cur" in
 		-*)
 			COMPREPLY=( $( compgen -W "--help --ignore-push-failures" -- "$cur" ) )
@@ -400,7 +400,7 @@ _docker_compose_push() {
 }
 
 
-_docker_compose_restart() {
+function _docker_compose_restart() {
 	case "$prev" in
 		--timeout|-t)
 			return
@@ -418,7 +418,7 @@ _docker_compose_restart() {
 }
 
 
-_docker_compose_rm() {
+function _docker_compose_rm() {
 	case "$cur" in
 		-*)
 			COMPREPLY=( $( compgen -W "--force -f --help --stop -s -v" -- "$cur" ) )
@@ -434,7 +434,7 @@ _docker_compose_rm() {
 }
 
 
-_docker_compose_run() {
+function _docker_compose_run() {
 	case "$prev" in
 		-e)
 			COMPREPLY=( $( compgen -e -- "$cur" ) )
@@ -457,7 +457,7 @@ _docker_compose_run() {
 }
 
 
-_docker_compose_scale() {
+function _docker_compose_scale() {
 	case "$prev" in
 		=)
 			COMPREPLY=("$cur")
@@ -480,7 +480,7 @@ _docker_compose_scale() {
 }
 
 
-_docker_compose_start() {
+function _docker_compose_start() {
 	case "$cur" in
 		-*)
 			COMPREPLY=( $( compgen -W "--help" -- "$cur" ) )
@@ -492,7 +492,7 @@ _docker_compose_start() {
 }
 
 
-_docker_compose_stop() {
+function _docker_compose_stop() {
 	case "$prev" in
 		--timeout|-t)
 			return
@@ -510,7 +510,7 @@ _docker_compose_stop() {
 }
 
 
-_docker_compose_top() {
+function _docker_compose_top() {
 	case "$cur" in
 		-*)
 			COMPREPLY=( $( compgen -W "--help" -- "$cur" ) )
@@ -522,7 +522,7 @@ _docker_compose_top() {
 }
 
 
-_docker_compose_unpause() {
+function _docker_compose_unpause() {
 	case "$cur" in
 		-*)
 			COMPREPLY=( $( compgen -W "--help" -- "$cur" ) )
@@ -534,7 +534,7 @@ _docker_compose_unpause() {
 }
 
 
-_docker_compose_up() {
+function _docker_compose_up() {
 	case "$prev" in
 		=)
 			COMPREPLY=("$cur")
@@ -565,7 +565,7 @@ _docker_compose_up() {
 }
 
 
-_docker_compose_version() {
+function _docker_compose_version() {
 	case "$cur" in
 		-*)
 			COMPREPLY=( $( compgen -W "--short" -- "$cur" ) )
@@ -574,7 +574,7 @@ _docker_compose_version() {
 }
 
 
-_docker_compose() {
+function _docker_compose() {
 	local previous_extglob_setting=$(shopt -p extglob)
 	shopt -s extglob
 

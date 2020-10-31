@@ -173,13 +173,13 @@ if [ "$color_prompt" == "yes" ]; then
             ## disable the default virtualenv prompt change
             export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-            VIRTENV=$(virtualenv_info)
+            VIRTENV=$(_virtualenv_info)
 
             ### Display ssh variable notification in prompt if applicable
-            SSH_SESSION=$(ssh_info)
+            SSH_SESSION=$(_ssh_info)
 
             ### Display AWS profile if applicable
-            CURR_AWS_PROFILE=$(aws_info)
+            CURR_AWS_PROFILE=$(_aws_info)
 
             # Display tty no in prompt
             local TTY_VAR=`tty 2> /dev/null | awk -F/ '{nlast = NF 0;print $nlast$NF": "}'`
@@ -194,7 +194,7 @@ if [ "$color_prompt" == "yes" ]; then
 
             ###################################################
             ### set titlebar
-            local TITLEBAR=`pwdtail`
+            local TITLEBAR=`_pwdtail`
             echo -ne '\033]2;'${TTY_VAR}${TITLEBAR}'\007'
 
 ## move out of indented tabs to avoid formatting horror (still in function)
@@ -232,10 +232,10 @@ ${ERRPROMPT}${TERGREEN}"
             ## disable the default virtualenv prompt change
             export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-            VIRTENV=$(virtualenv_min_info)
+            VIRTENV=$(_virtualenv_min_info)
 
             ### Display ssh variable notification in prompt if applicable
-            SSH_SESSION=$(ssh_info)
+            SSH_SESSION=$(_ssh_info)
 
             ### get parent directory
             FULL_PATH=$(pwd)
