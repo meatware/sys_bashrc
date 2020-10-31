@@ -1,5 +1,5 @@
 cite about-alias
-about-alias 'docker abbreviations'
+about-alias 'Docker aliases'
 
 ###################################################
 # from bash-it
@@ -63,11 +63,16 @@ alias dkt='docker stats --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t
 #alias dkps="docker ps --format '{{.ID}} ~ {{.Names}} ~ {{.Status}} ~ {{.Image}}'"
 alias dkps="docker ps"
 
-dkln() {
-  docker logs -f $(docker ps | grep $1 | awk '{print $1}')
+function dkln() {
+    about 'Signs into AWS EC2 instance using pattern ec2-user@${address}'
+    group 'ssh'
+    param 'Ip address or FQDN'
+    example 'sshec2 172.17.0.1'
+
+    docker logs -f $(docker ps | grep $1 | awk '{print $1}')
 }
 
-dkp() {
+function dkp() {
     if [ ! -f .dockerignore ]; then
         echo "Warning, .dockerignore file is missing."
         read -p "Proceed anyway?"
@@ -88,7 +93,7 @@ dkp() {
   docker push $LABEL
 }
 
-dkpnc() {
+function dkpnc() {
     if [ ! -f .dockerignore ]; then
         echo "Warning, .dockerignore file is missing."
         read -p "Proceed anyway?"
@@ -108,7 +113,7 @@ dkpnc() {
   docker push $LABEL
 }
 
-dkpl() {
+function dkpl() {
     if [ ! -f .dockerignore ]; then
         echo "Warning, .dockerignore file is missing."
         read -p "Proceed anyway?"
@@ -128,36 +133,36 @@ dkpl() {
   docker push $LATEST
 }
 
-dkclean() {
+function dkclean() {
     docker rm $(docker ps --all -q -f status=exited)
     docker volume rm $(docker volume ls -qf dangling=true)
 }
 
 
-dktop() {
+function dktop() {
     docker stats --format "table {{.Container}}\t{{.Name}}\t{{.CPUPerc}}  {{.MemPerc}}\t{{.NetIO}}\t{{.BlockIO}}"
 }
 
-dkstats() {
+function dkstats() {
     if [ $# -eq 0 ]
         then docker stats --no-stream;
         else docker stats --no-stream | grep $1;
     fi
 }
 
-dke() {
+function dke() {
     docker exec -it $1 /bin/sh
 }
 
-dkrun() {
+function dkrun() {
     docker run -it $1 /bin/sh
 }
 
-dkexe() {
+function dkexe() {
     docker exec -it $1 $2
 }
 
-dkreboot() {
+function dkreboot() {
     osascript -e 'quit app "Docker"'
     countdown 2
     open -a Docker
@@ -165,22 +170,22 @@ dkreboot() {
     countdown 120
 }
 
-dkstate() {
+function dkstate() {
     docker inspect $1 | jq .[0].State
 }
 
-dksb() {
+function dksb() {
     docker service scale $1=0
     sleep 2
     docker service scale $1=$2
 }
 
-mongo() {
+function mongo() {
     mongoLabel=$(docker ps | grep mongo | awk '{print $NF}')
     docker exec -it $mongoLabel mongo "$@"
 }
 
-redis() {
+function redis() {
     redisLabel=$(docker ps | grep redis | awk '{print $NF}')
     docker exec -it $redisLabel redis-cli
 }

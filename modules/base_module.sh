@@ -174,7 +174,7 @@ function terminator() {
 function grepo() {
     about 'Find all files "*" recursively from current directory and grep within each file for a pattern'
     group 'base'
-    param: 'Pattern to grep for'
+    param 'Pattern to grep for'
     example 'grepo $PATERN'
     example 'grepo import'
     # finds all files in current directory recursively and searches each for grep pattern
@@ -185,8 +185,8 @@ function grepo() {
 function grepoall() {
     about 'Find all files "*" recursively from current directory and grep within each file for a pattern'
     group 'base'
-    param: '1. Pattern to grep for'
-    param: '2. File type to find in double quotes'
+    param '1. Pattern to grep for'
+    param '2. File type to find in double quotes'
     example 'grepoall $PATERN'
     example 'grepoall import'
     example 'grepoall $PATERN $FILE_PATTERN'
@@ -208,7 +208,7 @@ function grepoall() {
 function del_file_by_patt() {
     about 'Delete all files matching a pattern'
     group 'base'
-    param: '1. Delete pattern'
+    param '1. Delete pattern'
     example 'del_file_by_patt $DEL_PATERN'
     example 'del_file_by_patt "*.css"'
 
@@ -221,7 +221,7 @@ function del_file_by_patt() {
 function venv_create() {
     about 'Create & activte a python virtual environment. Works with Python3'
     group 'base'
-    param: 'python version findable on path. Test with $(which)'
+    param 'python version findable on path. Test with $(which)'
     example 'venv_create python3.6'
 
     if [[ $# -ge 1 ]]; then
@@ -242,7 +242,7 @@ function venv_create() {
 function venv_activate() {
     about 'Activte an existing python virtual environment'
     group 'base'
-    param: 'python version findable on path. Test with $(which)'
+    param 'python version findable on path. Test with $(which)'
     example 'venv_activate'
 
     source venv/bin/activate

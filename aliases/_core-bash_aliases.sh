@@ -27,7 +27,7 @@ function mkcd() {
 
 
 # ls commands
-alias ls='ls -ah --color=always'
+alias ls='ls -ah --color=always' # ls always has --color switched on & shows all files
 alias qs='/bin/ls' # fast ls with no options (many files in a directory)
 alias la='ls -Alh' # show hidden files
 alias lao='ls -ld .?*' # show ONLY hidden files
@@ -77,7 +77,6 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
-alias quick-ssh='ssh -Y -C -c blowfish-cbc,arcfour username@yourhost.com' # Use faster ssh ciphers
 alias edbash='gedit ~/.bashrc ~/sys_bashrc/internal/*.sh &'
 alias F5='source ~/.bashrc'
 

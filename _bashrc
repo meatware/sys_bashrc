@@ -46,7 +46,7 @@ cite _about _param _example _group _author _version
 . "${HOME}/sys_bashrc/internal/internal_git_functions.sh"
 
 # source aliases
-. "${HOME}/sys_bashrc/aliases/_bash_aliases.sh"
+. "${HOME}/sys_bashrc/aliases/_core-bash_aliases.sh"
 . "${HOME}/sys_bashrc/aliases/docker_aliases.sh"
 . "${HOME}/sys_bashrc/aliases/docker-compose_aliases.sh"
 . "${HOME}/sys_bashrc/aliases/git_aliases.sh"

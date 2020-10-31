@@ -4,7 +4,7 @@ about-internal 'Internal theme related functions'
 function _check_integer() {
     about 'Check if argument is an integer'
     group 'internal'
-    param: 'A putative integer'
+    param 'A putative integer'
     example '_check_integer 42'
 
     local MYINT="$1"
@@ -23,8 +23,8 @@ function _check_integer() {
 function _check_theme_range() {
     about 'Check if argument is an integer between 0 --> N'
     group 'internal'
-    param: '1. A test integer'
-    param: '2. Ma=x number in range'
+    param '1. A test integer'
+    param '2. Ma=x number in range'
     example '_check_theme_range 56 1003'
 
     local MYINT="$1"
@@ -42,7 +42,7 @@ function _check_theme_range() {
 function colsw() {
     about 'Switch PS1 prompt theme color scheme usining a integer, N. There is a upper limit to N'
     group 'internal'
-    param: '1. A integer corresponding to a theme color scheme. See internal_colour_defs.sh'
+    param '1. A integer corresponding to a theme color scheme. See internal_colour_defs.sh'
     example 'colsw 42'
 
     ## switches theme color set by $THEME_VAR vals
@@ -132,7 +132,7 @@ BACON
 function colsw_path() {
     about 'Fine Tune PS1 prompt theme $PATH_COL_VAR val color scheme usinng a integer, N. There is a upper limit to N'
     group 'internal'
-    param: '1. A integer corresponding to a theme color scheme. See internal_colour_defs.sh'
+    param '1. A integer corresponding to a theme color scheme. See internal_colour_defs.sh'
     example 'colscolsw_path 2'
 
     local NEWPATH_IDX=${1}
@@ -213,7 +213,7 @@ function col_cp_root() {
 function col_ssh() {
     about 'Copy sys_bashrc PS1 prompt to remote host via rsync'
     group 'internal'
-    param: '${USERNAME}@${HOSTNAME}'
+    param '${USERNAME}@${HOSTNAME}'
     example 'col_ssh ubuntu@mywebserver.com'
     ## copies .bashrc to remote host specified by $1 commandline arg user@remotehost
     rsync -av ${HOME}/sys_bashrc ${1}:~/
