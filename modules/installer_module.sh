@@ -1,5 +1,5 @@
-cite about-plugin
-about-plugin 'Install additional packages'
+cite about-module
+about-module 'Install additional packages'
 
 # GH_INSTALL_LIB = {{program-name: $GITHUB_USER,$GITHUB_REPO,$Description}}
 declare -A GH_INSTALL_LIB='([ccat]="owenthereal,ccat,coloured-cat")'

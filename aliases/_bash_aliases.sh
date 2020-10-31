@@ -1,4 +1,4 @@
-cite 'about-alias'
+cite about-alias
 about-alias 'Core BASH Aliases'
 
 function check_alias_clashes() {
@@ -78,7 +78,7 @@ alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
 alias quick-ssh='ssh -Y -C -c blowfish-cbc,arcfour username@yourhost.com' # Use faster ssh ciphers
-alias edbash='gedit ~/.bashrc ~/sys_bashrc/bashrc_assets/*.sh &'
+alias edbash='gedit ~/.bashrc ~/sys_bashrc/internal/*.sh &'
 alias F5='source ~/.bashrc'
 
 

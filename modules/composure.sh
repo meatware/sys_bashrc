@@ -1,8 +1,5 @@
 #!/bin/bash
 
-cite 'about-alias'
-about-alias 'Composure module by Erichs: light-hearted functions for intuitive shell programming '
-
 # composure - by erichs
 # light-hearted functions for intuitive shell programming
 
@@ -540,3 +537,6 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTIO
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 EOF
+
+cite about-module
+about-module 'Composure module by Erichs: light-hearted functions for intuitive shell programming '

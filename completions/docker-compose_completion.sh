@@ -1,7 +1,7 @@
 #!/bin/bash
 
-cite 'about-alias'
-about-alias 'docker-compose Completions'
+cite about-completion
+about-completion 'docker-compose Completions'
 #
 # bash completion for docker-compose
 #

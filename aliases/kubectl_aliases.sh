@@ -2,7 +2,7 @@
 #
 # -binaryanomaly
 
-cite 'about-alias'
+cite about-alias
 about-alias 'kubectl aliases'
 
 alias kc='kubectl'

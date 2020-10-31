@@ -1,5 +1,5 @@
-cite 'about-alias'
-about-alias 'Internal theme related functions'
+cite 'about-internal'
+about-internal 'Internal theme related functions'
 
 function _check_integer() {
     about 'Check if argument is an integer'

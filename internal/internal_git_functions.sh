@@ -1,5 +1,5 @@
-cite 'about-alias'
-about-alias 'Internal PS prompt related git functions'
+cite 'about-internal'
+about-internal 'Internal PS prompt related git functions'
 
 ##################################
 ### git branch functions

@@ -1,5 +1,5 @@
-cite about-plugin
-about-plugin 'Base module'
+cite about-module
+about-module 'Base module'
 
 
 function ips() {

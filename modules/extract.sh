@@ -1,5 +1,5 @@
-cite about-plugin
-about-plugin 'one command to extract them all...'
+cite about-module
+about-module 'one command to extract them all...'
 
 # extract file(s) from compressed status
 function extract() {

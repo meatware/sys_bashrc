@@ -1,5 +1,5 @@
-cite about-plugin
-about-plugin 'Helper functions for using docker-compose'
+cite about-module
+about-module 'Helper functions for using docker-compose'
 
 function docker-compose-fresh() {
     about 'Shut down, remove and start again the docker-compose setup, then tail the logs'

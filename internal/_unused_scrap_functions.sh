@@ -1,5 +1,5 @@
-cite 'about-alias'
-about-alias 'Scrap functions'
+cite 'about-internal'
+about-internal 'Scrap functions'
 
 #################################################################
 #################################################################

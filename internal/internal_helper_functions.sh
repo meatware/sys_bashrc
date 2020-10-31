@@ -1,5 +1,5 @@
-cite 'about-alias'
-about-alias 'Internal bash helper functions'
+cite 'about-internal'
+about-internal 'Internal bash helper functions'
 
 function check_new_bashrc_vers() {
     about 'checks whether sys_bashrc is up-to-date'

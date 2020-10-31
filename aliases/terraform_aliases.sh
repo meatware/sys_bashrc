@@ -1,7 +1,7 @@
 
 # Aliases for Terraform
 
-cite 'about-alias'
+cite about-alias
 about-alias 'Terraform abbreviations'
 
 alias tf='terraform'

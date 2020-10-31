@@ -1,5 +1,21 @@
 # .bashrc
 
+### Uncomment for error chaceking .bashrc
+# set -eE -o functrace
+
+# file1=f1
+# file2=f2
+# file3=f3
+# file4=f4
+
+# failure() {
+#   local lineno=$1
+#   local msg=$2
+#   echo "Failed at $lineno: $msg"
+#   sleep 60
+# }
+# trap 'failure ${LINENO} "$BASH_COMMAND"' ERR
+
 #####################################################
 ####### Profile slow .bashrc code - part 1/2 ########
 #####################################################
@@ -24,10 +40,10 @@ cite _about _param _example _group _author _version
 
 # Source bashrc assets
 . "${HOME}/sys_bashrc/theme_settings.sh"
-. "${HOME}/sys_bashrc/bashrc_assets/internal_colour_functions.sh"
-. "${HOME}/sys_bashrc/bashrc_assets/internal_helper_functions.sh"
-. "${HOME}/sys_bashrc/bashrc_assets/internal_colour_defs.sh"
-. "${HOME}/sys_bashrc/bashrc_assets/internal_git_functions.sh"
+. "${HOME}/sys_bashrc/internal/internal_colour_functions.sh"
+. "${HOME}/sys_bashrc/internal/internal_helper_functions.sh"
+. "${HOME}/sys_bashrc/internal/internal_colour_defs.sh"
+. "${HOME}/sys_bashrc/internal/internal_git_functions.sh"
 
 # source aliases
 . "${HOME}/sys_bashrc/aliases/_bash_aliases.sh"

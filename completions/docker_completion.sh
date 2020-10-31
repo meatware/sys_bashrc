@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-cite 'about-alias'
-about-alias 'Docker Completions'
+cite about-completion
+about-completion 'Docker Completions'
 
 # shellcheck disable=SC2016,SC2119,SC2155,SC2206,SC2207
 #

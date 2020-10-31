@@ -1,5 +1,5 @@
-cite about-plugin
-about-plugin 'History functions'
+cite about-module
+about-module 'History functions'
 
 
 ################################################

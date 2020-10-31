@@ -2,7 +2,7 @@
 #
 # -binaryanomaly
 
-cite 'about-alias'
+cite about-alias
 about-alias 'Apt & dpkg aliases for Ubuntu and Debian distros.'
 
 alias apts='apt-cache search'

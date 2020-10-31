@@ -1,5 +1,5 @@
-cite 'about-alias'
-about-alias 'PS prompt color definitions'
+cite 'about-internal'
+about-internal 'PS prompt color definitions'
 
 # colors:
 # http://bitmote.com/index.php?post/2012/11/19/Using-ANSI-Color-Codes-to-Colorize-Your-Bash-Prompt-on-Linux

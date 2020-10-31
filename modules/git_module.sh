@@ -1,5 +1,5 @@
-cite about-plugin
-about-plugin 'git helper functions'
+cite about-module
+about-module 'git helper functions'
 
 function git_remote() {
   about 'adds remote $GIT_HOSTING:$1 to current repo'
