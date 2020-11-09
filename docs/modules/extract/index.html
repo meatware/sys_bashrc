@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <meta name="author" content="giri">
-    <link rel="canonical" href="http://fillmein.com/modules/extract/">
+    <link rel="canonical" href="https://meatware.github.io/sys_bashrc/modules/extract/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>extract - Sys Bashrc</title>
@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "one command to extract them all...", url: "#_top", children: [
+              {title: "Function Index", url: "#function-index" },
           ]},
         ];
 
@@ -84,6 +85,81 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     <h1 id="one-command-to-extract-them-all">one command to extract them all...</h1>
 <p><strong><em>(in /home/bsgt/sys_bashrc/modules/extract.sh)</em></strong></p>
+<h2 id="function-index">Function Index</h2>
+<pre><code class="language-python">01 - extract
+</code></pre>
+<hr />
+<h3 id="extract">&gt;&gt; extract():</h3>
+<pre><code class="language-bash">function extract() {
+    local opt
+    local OPTIND=1
+    while getopts &quot;hv&quot; opt; do
+        case &quot;$opt&quot; in
+            h)
+                cat &lt;&lt;End-Of-Usage
+Usage: ${FUNCNAME[0]} [option] &lt;archives&gt;
+    options:
+        -h  show this message and exit
+        -v  verbosely list files processed
+End-Of-Usage
+                return
+                ;;
+            v)
+                local -r verbose='v'
+                ;;
+            ?)
+                extract -h &gt;&amp;2
+                return 1
+                ;;
+        esac
+    done
+    shift $((OPTIND-1))
+
+    [ $# -eq 0 ] &amp;&amp; extract -h &amp;&amp; return 1
+    while [ $# -gt 0 ]; do
+        if [[ ! -f &quot;$1&quot; ]]; then
+            echo &quot;extract: '$1' is not a valid file&quot; &gt;&amp;2
+            shift
+            continue
+        fi
+
+        local -r filename=$(basename -- $1)
+        local -r filedirname=$(dirname -- $1)
+        local targetdirname=$(sed 's/\(\.tar\.bz2$\|\.tbz$\|\.tbz2$\|\.tar\.gz$\|\.tgz$\|\.tar$\|\.tar\.xz$\|\.txz$\|\.tar\.Z$\|\.7z$\)//g' &lt;&lt;&lt; $filename)
+        if [ &quot;$filename&quot; = &quot;$targetdirname&quot; ]; then
+            targetdirname=&quot;&quot;
+        else
+            mkdir -v &quot;$filedirname/$targetdirname&quot;
+        fi
+
+        if [ -f &quot;$1&quot; ]; then
+            case &quot;$1&quot; in
+                *.tar.bz2|*.tbz|*.tbz2) tar &quot;x${verbose}jf&quot; &quot;$1&quot; -C &quot;$filedirname/$targetdirname&quot; ;;
+                *.tar.gz|*.tgz) tar &quot;x${verbose}zf&quot; &quot;$1&quot; -C &quot;$filedirname/$targetdirname&quot; ;;
+                *.tar.xz|*.txz) tar &quot;x${verbose}Jf&quot; &quot;$1&quot; -C &quot;$filedirname/$targetdirname&quot; ;;
+                *.tar.Z) tar &quot;x${verbose}Zf&quot; &quot;$1&quot; -C &quot;$filedirname/$targetdirname&quot; ;;
+                *.bz2) bunzip2 &quot;$1&quot; ;;
+                *.deb) dpkg-deb -x${verbose} &quot;$1&quot; &quot;${1:0:-4}&quot; ;;
+                *.pax.gz) gunzip &quot;$1&quot;; set -- &quot;$@&quot; &quot;${1:0:-3}&quot; ;;
+                *.gz) gunzip &quot;$1&quot; ;;
+                *.pax) pax -r -f &quot;$1&quot; ;;
+                *.pkg) pkgutil --expand &quot;$1&quot; &quot;${1:0:-4}&quot; ;;
+                *.rar) unrar x &quot;$1&quot; ;;
+                *.rpm) rpm2cpio &quot;$1&quot; | cpio -idm${verbose} ;;
+                *.tar) tar &quot;x${verbose}f&quot; &quot;$1&quot; -C &quot;$filedirname/$targetdirname&quot; ;;
+                *.xz) xz --decompress &quot;$1&quot; ;;
+                *.zip|*.war|*.jar) unzip &quot;$1&quot; ;;
+                *.Z) uncompress &quot;$1&quot; ;;
+                *.7z) 7za x &quot;$1&quot; ;;
+                *) echo &quot;'$1' cannot be extracted via extract&quot; &gt;&amp;2;;
+            esac
+        fi
+
+        shift
+    done
+}
+
+</code></pre>
 
   <br>
     

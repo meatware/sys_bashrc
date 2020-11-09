@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <meta name="author" content="giri">
-    <link rel="canonical" href="http://fillmein.com/modules/installer_module/">
+    <link rel="canonical" href="https://meatware.github.io/sys_bashrc/modules/installer_module/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>installer_module - Sys Bashrc</title>
@@ -86,16 +86,18 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <h1 id="install-additional-packages">Install additional packages</h1>
 <p><strong><em>(in /home/bsgt/sys_bashrc/modules/installer_module.sh)</em></strong></p>
 <h2 id="function-index">Function Index</h2>
-<pre><code class="language-bash">01 - get-latest-gh-release
+<pre><code class="language-python">01 - get-latest-gh-release
 02 - install-usr-local
 </code></pre>
 <hr />
-<h3 id="get-latest-gh-release">get-latest-gh-release:</h3>
+<h3 id="get-latest-gh-release">&gt;&gt; get-latest-gh-release():</h3>
+<blockquote>
 <p><strong><em>about</em></strong>: Download &amp; extract the latest package release from gihub releases page to /tmp. Use install-usr-local() to install correct file</p>
 <p><strong><em>group</em></strong>: installers</p>
 <p><strong><em>param</em></strong>: 1: package name. This is used to search an internal dictionary for github connection details</p>
 <p><strong><em>example</em></strong>: <code>$ get-latest-gh-release ccat</code></p>
-<pre><code class="language-bash">function get-latest-gh-release {
+</blockquote>
+<pre><code class="language-bash">function get-latest-gh-release() {
 
     local PACKAGE_NAME=$1
     local GITHUB_USER=$(echo &quot;${GH_INSTALL_LIB[${PACKAGE_NAME}]}&quot; | cut -d, -f1)
@@ -118,16 +120,15 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 }
 
 </code></pre>
-<h4 id="function-calls">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
-</code></pre>
 <hr />
-<h3 id="install-usr-local">install-usr-local:</h3>
+<h3 id="install-usr-local">&gt;&gt; install-usr-local():</h3>
+<blockquote>
 <p><strong><em>about</em></strong>: Move program</p>
 <p><strong><em>group</em></strong>: installers</p>
 <p><strong><em>param</em></strong>: 1: Program file to move to /usr/local/bin. This function makes it executable</p>
 <p><strong><em>example</em></strong>: <code>$ install-usr-local ${SOME_PROG}</code></p>
-<pre><code class="language-bash">function install-usr-local {
+</blockquote>
+<pre><code class="language-bash">function install-usr-local() {
 
     MYPROG=$1
 
@@ -135,9 +136,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     sudo chmod -v +x /usr/local/bin/$(basename $MYPROG)
 }
 
-</code></pre>
-<h4 id="function-calls_1">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
 </code></pre>
 
   <br>

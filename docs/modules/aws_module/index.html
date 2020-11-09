@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <meta name="author" content="giri">
-    <link rel="canonical" href="http://fillmein.com/modules/aws_module/">
+    <link rel="canonical" href="https://meatware.github.io/sys_bashrc/modules/aws_module/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>aws_module - Sys Bashrc</title>
@@ -86,7 +86,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <h1 id="aws-helper-functions">AWS helper functions</h1>
 <p><strong><em>(in /home/bsgt/sys_bashrc/modules/aws_module.sh)</em></strong></p>
 <h2 id="function-index">Function Index</h2>
-<pre><code class="language-bash">01 - awskeys
+<pre><code class="language-python">01 - awskeys
 02 - __awskeys_help
 03 - __awskeys_region
 04 - __awskeys_get
@@ -97,9 +97,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 09 - __awskeys_comp
 </code></pre>
 <hr />
-<h3 id="awskeys">awskeys:</h3>
+<h3 id="awskeys">&gt;&gt; awskeys():</h3>
+<blockquote>
 <p><strong><em>about</em></strong>: helper function for AWS credentials file</p>
 <p><strong><em>group</em></strong>: aws</p>
+</blockquote>
 <pre><code class="language-bash">function awskeys {
 
     if [[ ! -f &quot;${AWS_SHARED_CREDENTIALS_FILE}&quot; ]]; then
@@ -123,20 +125,19 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 }
 
 </code></pre>
-<h4 id="function-calls">Function Calls:</h4>
-<pre><code class="language-bash">└─ Ngedit(){
-   └─ gedit(){
-└─ awskeys
+<h5 id="function-calls">Function Calls:</h5>
+<pre><code class="language-bash">└─ awskeys
    ├─ __awskeys_region
    ├─ __awskeys_list
    ├─ __awskeys_show
    |  └─ __awskeys_get
    ├─ __awskeys_export
-   |  └─ __awskeys_get
+   |  ├─ __awskeys_get
+   |  └─ __awskeys_list
    └─ __awskeys_unset
 </code></pre>
 <hr />
-<h3 id="__awskeys_help">__awskeys_help:</h3>
+<h3 id="__awskeys_help">&gt;&gt; __awskeys_help():</h3>
 <pre><code class="language-bash">function __awskeys_help {
     echo -e &quot;Usage: awskeys [COMMAND] [profile]\n&quot;
     echo -e &quot;Helper to AWS credentials file.\n&quot;
@@ -150,18 +151,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 }
 
 </code></pre>
-<h4 id="function-calls_1">Function Calls:</h4>
-<pre><code class="language-bash">└─ Ngedit(){
-   └─ gedit(){
-└─ awskeys
-   ├─ __awskeys_region
-   ├─ __awskeys_list
-   ├─ __awskeys_show
-   |  └─ __awskeys_get
-   ├─ __awskeys_export
-   |  └─ __awskeys_get
-   └─ __awskeys_unset
-└─ __awskeys_help
+<h5 id="function-calls_1">Function Calls:</h5>
+<pre><code class="language-bash">└─ __awskeys_help
    └─ awskeys
       ├─ __awskeys_region
       ├─ __awskeys_list
@@ -170,7 +161,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       └─ __awskeys_unset
 </code></pre>
 <hr />
-<h3 id="__awskeys_region">__awskeys_region:</h3>
+<h3 id="__awskeys_region">&gt;&gt; __awskeys_region():</h3>
 <pre><code class="language-bash">function __awskeys_region {
     local new_region=$1
     if [[ -n &quot;${new_region}&quot; ]]; then
@@ -180,11 +171,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 }
 
 </code></pre>
-<h4 id="function-calls_2">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
-</code></pre>
 <hr />
-<h3 id="__awskeys_get">__awskeys_get:</h3>
+<h3 id="__awskeys_get">&gt;&gt; __awskeys_get():</h3>
 <pre><code class="language-bash">function __awskeys_get {
 
     local ln=$(grep -n &quot;\[ *$1 *\]&quot; &quot;${AWS_SHARED_CREDENTIALS_FILE}&quot; | cut -d &quot;:&quot; -f 1)
@@ -200,11 +188,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 }
 
 </code></pre>
-<h4 id="function-calls_3">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
-</code></pre>
 <hr />
-<h3 id="__awskeys_list">__awskeys_list:</h3>
+<h3 id="__awskeys_list">&gt;&gt; __awskeys_list():</h3>
 <pre><code class="language-bash">function __awskeys_list {
     local credentials_list=&quot;$((egrep '^\[ *[a-zA-Z0-9_-]+ *\]$' &quot;${AWS_SHARED_CREDENTIALS_FILE}&quot;; grep &quot;\[&quot; &quot;${AWS_SHARED_CREDENTIALS_FILE}&quot; | sed &quot;s|\[profile |\[|g&quot;) | sort | uniq)&quot;
     if [[ -n $&quot;{credentials_list}&quot; ]]; then
@@ -219,11 +204,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 }
 
 </code></pre>
-<h4 id="function-calls_4">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
-</code></pre>
 <hr />
-<h3 id="__awskeys_show">__awskeys_show:</h3>
+<h3 id="__awskeys_show">&gt;&gt; __awskeys_show():</h3>
 <pre><code class="language-bash">function __awskeys_show {
     local p_keys=&quot;$(__awskeys_get $1)&quot;
     if [[ -n &quot;${p_keys}&quot; ]]; then
@@ -234,29 +216,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 }
 
 </code></pre>
-<h4 id="function-calls_5">Function Calls:</h4>
-<pre><code class="language-bash">└─ Ngedit(){
-   └─ gedit(){
-└─ awskeys
-   ├─ __awskeys_region
-   ├─ __awskeys_list
-   ├─ __awskeys_show
-   |  └─ __awskeys_get
-   ├─ __awskeys_export
-   |  └─ __awskeys_get
-   └─ __awskeys_unset
-└─ __awskeys_help
-   └─ awskeys
-      ├─ __awskeys_region
-      ├─ __awskeys_list
-      ├─ __awskeys_show
-      ├─ __awskeys_export
-      └─ __awskeys_unset
-└─ __awskeys_show
+<h5 id="function-calls_2">Function Calls:</h5>
+<pre><code class="language-bash">└─ __awskeys_show
    └─ __awskeys_get
 </code></pre>
 <hr />
-<h3 id="__awskeys_export">__awskeys_export:</h3>
+<h3 id="__awskeys_export">&gt;&gt; __awskeys_export():</h3>
 <pre><code class="language-bash">function __awskeys_export {
     if [[ $(__awskeys_list) == *&quot;$1&quot;* ]]; then
         local p_keys=( $(__awskeys_get $1 | tr -d &quot; &quot;) )
@@ -274,41 +239,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 }
 
 </code></pre>
-<h4 id="function-calls_6">Function Calls:</h4>
-<pre><code class="language-bash">└─ Ngedit(){
-   └─ gedit(){
-└─ awskeys
-   ├─ __awskeys_region
-   ├─ __awskeys_list
-   ├─ __awskeys_show
-   |  └─ __awskeys_get
-   ├─ __awskeys_export
-   |  └─ __awskeys_get
-   └─ __awskeys_unset
-└─ __awskeys_help
-   └─ awskeys
-      ├─ __awskeys_region
-      ├─ __awskeys_list
-      ├─ __awskeys_show
-      ├─ __awskeys_export
-      └─ __awskeys_unset
-└─ __awskeys_show
-   └─ __awskeys_get
-└─ __awskeys_export
-   └─ __awskeys_get
+<h5 id="function-calls_3">Function Calls:</h5>
+<pre><code class="language-bash">└─ __awskeys_export
+   ├─ __awskeys_get
+   └─ __awskeys_list
 </code></pre>
 <hr />
-<h3 id="__awskeys_unset">__awskeys_unset:</h3>
+<h3 id="__awskeys_unset">&gt;&gt; __awskeys_unset():</h3>
 <pre><code class="language-bash">function __awskeys_unset {
     unset AWS_PROFILE AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
 }
 
 </code></pre>
-<h4 id="function-calls_7">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
-</code></pre>
 <hr />
-<h3 id="__awskeys_comp">__awskeys_comp:</h3>
+<h3 id="__awskeys_comp">&gt;&gt; __awskeys_comp():</h3>
 <pre><code class="language-bash">function __awskeys_comp {
     local cur prev opts prevprev
     COMPREPLY=()
@@ -332,29 +276,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 complete -F __awskeys_comp awskeys
 
 </code></pre>
-<h4 id="function-calls_8">Function Calls:</h4>
-<pre><code class="language-bash">└─ Ngedit(){
-   └─ gedit(){
-└─ awskeys
-   ├─ __awskeys_region
-   ├─ __awskeys_list
-   ├─ __awskeys_show
-   |  └─ __awskeys_get
-   ├─ __awskeys_export
-   |  └─ __awskeys_get
-   └─ __awskeys_unset
-└─ __awskeys_help
-   └─ awskeys
-      ├─ __awskeys_region
-      ├─ __awskeys_list
-      ├─ __awskeys_show
-      ├─ __awskeys_export
-      └─ __awskeys_unset
-└─ __awskeys_show
-   └─ __awskeys_get
-└─ __awskeys_export
-   └─ __awskeys_get
-└─ __awskeys_comp
+<h5 id="function-calls_4">Function Calls:</h5>
+<pre><code class="language-bash">└─ __awskeys_comp
    └─ __awskeys_list
 </code></pre>
 

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <meta name="author" content="giri">
-    <link rel="canonical" href="http://fillmein.com/modules/git_module/">
+    <link rel="canonical" href="https://meatware.github.io/sys_bashrc/modules/git_module/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>git_module - Sys Bashrc</title>
@@ -86,51 +86,54 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <h1 id="git-helper-functions">git helper functions</h1>
 <p><strong><em>(in /home/bsgt/sys_bashrc/modules/git_module.sh)</em></strong></p>
 <h2 id="function-index">Function Index</h2>
-<pre><code class="language-bash">01 - git_remote
+<pre><code class="language-python">01 - git_remote
 02 - git_first_push
-03 - git_pub()
-04 - git_revert()
-05 - git_rollback()
-06 - git_remove_missing_files()
-07 - local-ignore()
-08 - git_info()
-09 - git_stats
-10 - gittowork()
-11 - gitignore-reload()
-12 - git_greedy_get()
+03 - git_pub
+04 - git_revert
+05 - _is_clean
+06 - _commit_exists
+07 - _keep_changes
+08 - git_rollback
+09 - git_remove_missing_files
+10 - local-ignore
+11 - git_info
+12 - git_stats
+13 - gittowork
+14 - gitignore-reload
+15 - git_greedy_get
 </code></pre>
 <hr />
-<h3 id="git_remote">git_remote:</h3>
+<h3 id="git_remote">&gt;&gt; git_remote():</h3>
+<blockquote>
 <p><strong><em>about</em></strong>: adds remote $GIT_HOSTING:$1 to current repo</p>
 <p><strong><em>group</em></strong>: git</p>
-<pre><code class="language-bash">function git_remote {
+</blockquote>
+<pre><code class="language-bash">function git_remote() {
 
   echo &quot;Running: git remote add origin ${GIT_HOSTING}:$1.git&quot;
   git remote add origin $GIT_HOSTING:$1.git
 }
 
 </code></pre>
-<h4 id="function-calls">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
-</code></pre>
 <hr />
-<h3 id="git_first_push">git_first_push:</h3>
+<h3 id="git_first_push">&gt;&gt; git_first_push():</h3>
+<blockquote>
 <p><strong><em>about</em></strong>: push into origin refs/heads/master</p>
 <p><strong><em>group</em></strong>: git</p>
-<pre><code class="language-bash">function git_first_push {
+</blockquote>
+<pre><code class="language-bash">function git_first_push() {
 
   echo &quot;Running: git push origin master:refs/heads/master&quot;
   git push origin master:refs/heads/master
 }
 
 </code></pre>
-<h4 id="function-calls_1">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
-</code></pre>
 <hr />
-<h3 id="git_pub">git_pub():</h3>
+<h3 id="git_pub">&gt;&gt; git_pub():</h3>
+<blockquote>
 <p><strong><em>about</em></strong>: publishes current branch to remote origin</p>
 <p><strong><em>group</em></strong>: git</p>
+</blockquote>
 <pre><code class="language-bash">function git_pub() {
   BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
@@ -139,13 +142,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 }
 
 </code></pre>
-<h4 id="function-calls_2">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
-</code></pre>
 <hr />
-<h3 id="git_revert">git_revert():</h3>
+<h3 id="git_revert">&gt;&gt; git_revert():</h3>
+<blockquote>
 <p><strong><em>about</em></strong>: applies changes to HEAD that revert all changes after this commit</p>
 <p><strong><em>group</em></strong>: git</p>
+</blockquote>
 <pre><code class="language-bash">function git_revert() {
 
   git reset $1
@@ -155,56 +157,64 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 }
 
 </code></pre>
-<h4 id="function-calls_3">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
+<hr />
+<h3 id="_is_clean">&gt;&gt; _is_clean():</h3>
+<pre><code class="language-bash">function _is_clean() {
+  if [[ $(git diff --shortstat 2&gt; /dev/null | tail -n1) != &quot;&quot; ]]; then
+    echo &quot;Your branch is dirty, please commit your changes&quot;
+    kill -INT $$
+  fi
+}
+
 </code></pre>
 <hr />
-<h3 id="git_rollback">git_rollback():</h3>
+<h3 id="_commit_exists">&gt;&gt; _commit_exists():</h3>
+<pre><code class="language-bash">function _commit_exists() {
+  git rev-list --quiet $1
+  status=$?
+  if [ $status -ne 0 ]; then
+    echo &quot;Commit ${1} does not exist&quot;
+    kill -INT $$
+  fi
+}
+
+</code></pre>
+<hr />
+<h3 id="_keep_changes">&gt;&gt; _keep_changes():</h3>
+<pre><code class="language-bash">function _keep_changes() {
+  while true
+  do
+    read -p &quot;Do you want to keep all changes from rolled back revisions in your working tree? [Y/N]&quot; RESP
+    case $RESP
+    in
+    [yY])
+      echo &quot;Rolling back to commit ${1} with unstaged changes&quot;
+      git reset $1
+      break
+      ;;
+    [nN])
+      echo &quot;Rolling back to commit ${1} with a clean working tree&quot;
+      git reset --hard $1
+      break
+      ;;
+    *)
+      echo &quot;Please enter Y or N&quot;
+    esac
+  done
+}
+
+</code></pre>
+<hr />
+<h3 id="git_rollback">&gt;&gt; git_rollback():</h3>
+<blockquote>
 <p><strong><em>about</em></strong>: resets the current HEAD to this commit</p>
 <p><strong><em>group</em></strong>: git</p>
+</blockquote>
 <pre><code class="language-bash">function git_rollback() {
 
-  function is_clean() {
-    if [[ $(git diff --shortstat 2&gt; /dev/null | tail -n1) != &quot;&quot; ]]; then
-      echo &quot;Your branch is dirty, please commit your changes&quot;
-      kill -INT $$
-    fi
-  }
-
-  function commit_exists() {
-    git rev-list --quiet $1
-    status=$?
-    if [ $status -ne 0 ]; then
-      echo &quot;Commit ${1} does not exist&quot;
-      kill -INT $$
-    fi
-  }
-
-  function keep_changes() {
-    while true
-    do
-      read -p &quot;Do you want to keep all changes from rolled back revisions in your working tree? [Y/N]&quot; RESP
-      case $RESP
-      in
-      [yY])
-        echo &quot;Rolling back to commit ${1} with unstaged changes&quot;
-        git reset $1
-        break
-        ;;
-      [nN])
-        echo &quot;Rolling back to commit ${1} with a clean working tree&quot;
-        git reset --hard $1
-        break
-        ;;
-      *)
-        echo &quot;Please enter Y or N&quot;
-      esac
-    done
-  }
-
   if [ -n &quot;$(git symbolic-ref HEAD 2&gt; /dev/null)&quot; ]; then
-    is_clean
-    commit_exists $1
+    _is_clean
+    _commit_exists $1
 
     while true
     do
@@ -212,7 +222,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       case $RESP
         in
         [yY])
-          keep_changes $1
+          _keep_changes $1
           break
           ;;
         [nN])
@@ -228,38 +238,40 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 }
 
 </code></pre>
-<h4 id="function-calls_4">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
+<h5 id="function-calls">Function Calls:</h5>
+<pre><code class="language-bash">└─ git_rollback
+   ├─ _commit_exists
+   └─ _keep_changes
 </code></pre>
 <hr />
-<h3 id="git_remove_missing_files">git_remove_missing_files():</h3>
+<h3 id="git_remove_missing_files">&gt;&gt; git_remove_missing_files():</h3>
+<blockquote>
 <p><strong><em>group</em></strong>: git</p>
+</blockquote>
 <pre><code class="language-bash">function git_remove_missing_files() {
 
   git ls-files -d -z | xargs -0 git update-index --remove
 }
 
 </code></pre>
-<h4 id="function-calls_5">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
-</code></pre>
 <hr />
-<h3 id="local-ignore">local-ignore():</h3>
+<h3 id="local-ignore">&gt;&gt; local-ignore():</h3>
+<blockquote>
 <p><strong><em>about</em></strong>: adds file or path to git exclude file</p>
 <p><strong><em>param</em></strong>: 1: file or path fragment to ignore</p>
 <p><strong><em>group</em></strong>: git</p>
+</blockquote>
 <pre><code class="language-bash">function local-ignore() {
   echo &quot;$1&quot; &gt;&gt; .git/info/exclude
 }
 
 </code></pre>
-<h4 id="function-calls_6">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
-</code></pre>
 <hr />
-<h3 id="git_info">git_info():</h3>
+<h3 id="git_info">&gt;&gt; git_info():</h3>
+<blockquote>
 <p><strong><em>about</em></strong>: overview for your git repo</p>
 <p><strong><em>group</em></strong>: git</p>
+</blockquote>
 <pre><code class="language-bash">function git_info() {
 
     if [ -n &quot;$(git symbolic-ref HEAD 2&gt; /dev/null)&quot; ]; then
@@ -292,14 +304,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 }
 
 </code></pre>
-<h4 id="function-calls_7">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
-</code></pre>
 <hr />
-<h3 id="git_stats">git_stats:</h3>
+<h3 id="git_stats">&gt;&gt; git_stats():</h3>
+<blockquote>
 <p><strong><em>about</em></strong>: display stats per author</p>
 <p><strong><em>group</em></strong>: git</p>
-<pre><code class="language-bash">function git_stats {
+</blockquote>
+<pre><code class="language-bash">function git_stats() {
 
 
 if [ -n &quot;$(git symbolic-ref HEAD 2&gt; /dev/null)&quot; ]; then
@@ -338,15 +349,14 @@ fi
 }
 
 </code></pre>
-<h4 id="function-calls_8">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
-</code></pre>
 <hr />
-<h3 id="gittowork">gittowork():</h3>
+<h3 id="gittowork">&gt;&gt; gittowork():</h3>
+<blockquote>
 <p><strong><em>about</em></strong>: Places the latest .gitignore file for a given project type in the current directory, or concatenates onto an existing .gitignore</p>
 <p><strong><em>group</em></strong>: git</p>
 <p><strong><em>param</em></strong>: 1: the language/type of the project, used for determining the contents of the .gitignore file</p>
-<p><strong><em>example</em></strong>: <code>$ gittowork java</code></p>
+<p><strong><em>example</em></strong>: <code>gittowork java</code></p>
+</blockquote>
 <pre><code class="language-bash">function gittowork() {
 
   result=$(curl -L &quot;https://www.gitignore.io/api/$1&quot; 2&gt;/dev/null)
@@ -367,14 +377,13 @@ fi
 }
 
 </code></pre>
-<h4 id="function-calls_9">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
-</code></pre>
 <hr />
-<h3 id="gitignore-reload">gitignore-reload():</h3>
+<h3 id="gitignore-reload">&gt;&gt; gitignore-reload():</h3>
+<blockquote>
 <p><strong><em>about</em></strong>: Empties the git cache, and readds all files not blacklisted by .gitignore</p>
 <p><strong><em>group</em></strong>: git</p>
-<p><strong><em>example</em></strong>: <code>$ gitignore-reload</code></p>
+<p><strong><em>example</em></strong>: <code>gitignore-reload</code></p>
+</blockquote>
 <pre><code class="language-bash">function gitignore-reload() {
 
 
@@ -412,23 +421,19 @@ fi
 }
 
 </code></pre>
-<h4 id="function-calls_10">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
-</code></pre>
 <hr />
-<h3 id="git_greedy_get">git_greedy_get():</h3>
+<h3 id="git_greedy_get">&gt;&gt; git_greedy_get():</h3>
+<blockquote>
 <p><strong><em>about</em></strong>: Pulls all existing remote brachches when executed in an existing git repo</p>
 <p><strong><em>group</em></strong>: git</p>
-<p><strong><em>example</em></strong>: <code>$ git_greedy_get</code></p>
+<p><strong><em>example</em></strong>: <code>git_greedy_get</code></p>
+</blockquote>
 <pre><code class="language-bash">function git_greedy_get() {
   git branch -r | grep -v '\-&gt;' | while read remote; do git branch --track &quot;${remote#origin/}&quot; &quot;$remote&quot;; done
   git fetch --all
   git pull --all
 }
 
-</code></pre>
-<h4 id="function-calls_11">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
 </code></pre>
 
   <br>

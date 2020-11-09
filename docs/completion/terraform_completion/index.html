@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <meta name="author" content="giri">
-    <link rel="canonical" href="http://fillmein.com/completion/terraform_completion/">
+    <link rel="canonical" href="https://meatware.github.io/sys_bashrc/completion/terraform_completion/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>terraform_completion - Sys Bashrc</title>
@@ -34,6 +34,7 @@
         
         var pageToc = [
           {title: "Terraform completions", url: "#_top", children: [
+              {title: "Function Index", url: "#function-index" },
           ]},
         ];
 
@@ -84,6 +85,50 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     <h1 id="terraform-completions">Terraform completions</h1>
 <p><strong><em>(in /home/bsgt/sys_bashrc/completions/terraform_completion.sh)</em></strong></p>
+<h2 id="function-index">Function Index</h2>
+<pre><code class="language-python">01 - _terraform
+</code></pre>
+<hr />
+<h3 id="_terraform">&gt;&gt; _terraform():</h3>
+<pre><code class="language-bash">function _terraform() {
+    local cur prev words cword opts
+    _get_comp_words_by_ref -n : cur prev words cword
+    COMPREPLY=()
+    opts=&quot;&quot;
+
+    if [[ ${cword} -eq 1 ]] ; then
+
+        opts=&quot;$(terraform --help | grep -E '^\s\s\s\s\S' | awk '{print $1}')&quot;
+        opts=&quot;${opts} --help --version&quot;
+
+    elif [[ ${cword} -gt 1 ]] ; then
+
+        if [[ ${cword} -eq 2 &amp;&amp; ${prev} == '--help' ]] ; then
+
+            opts=&quot;$(terraform --help | grep -E '^\s\s\s\s\S' | awk '{print $1}')&quot;
+
+        elif [[ ${words[1]} != &quot;--help&quot; &amp;&amp; ${words[1]} != &quot;--version&quot; &amp;&amp; ${words[1]} != &quot;version&quot; ]] ; then
+
+            opts=&quot;$(terraform --help &quot;${words[1]}&quot; | grep -E '^\s+-' | awk '{print $1}' | awk -F '=' '{ if ($0 ~ /=/) {print $1&quot;=&quot;} else {print $1} }')&quot;
+            opts=&quot;${opts} $(terraform --help &quot;${words[1]}&quot; | grep -E '^\s\s\s\s\S' | awk '{print $1}')&quot;
+            opts=&quot;${opts} --help&quot;
+
+        fi
+    fi
+
+    COMPREPLY=( $(compgen -W &quot;${opts}&quot; -- &quot;${cur}&quot;) )
+
+    if [[ ${#COMPREPLY[*]} -eq 1 ]] ; then
+        if [[ ${COMPREPLY[0]} == *= ]] ; then
+            compopt -o nospace
+        fi
+    fi
+    return 0
+}
+
+complete -F _terraform terraform
+
+</code></pre>
 
   <br>
     

@@ -192,7 +192,7 @@ function csp2() {
 function csp3() {
     about 'Change prompt style to a basic 1-line primitive level (default)'
     group 'internal'
-    example 'csp1'
+    example 'csp3'
     unset SET_FULL_PROMPT
     export SET_FULL_PROMPT=
     source ~/.bashrc

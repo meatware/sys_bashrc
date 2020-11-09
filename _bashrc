@@ -87,6 +87,7 @@ fi
 . "${HOME}/sys_bashrc/modules/history_module.sh"
 . "${HOME}/sys_bashrc/modules/installer_module.sh"
 . "${HOME}/sys_bashrc/modules/ssh_helper_module.sh"
+. "${HOME}/sys_bashrc/modules/ssh-agent_module.sh"
 
 #################################################################
 # make less more friendly for non-text input files, see lesspipe

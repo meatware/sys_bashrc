@@ -19,9 +19,9 @@ function ips() {
 
 function down4me() {
     about 'checks whether a website is down for you, or everybody'
+    group 'base'
     param '1: website url'
     example '$ down4me http://www.google.com'
-    group 'base'
 
     curl -Ls "http://downforeveryoneorjustme.com/$1" | sed '/just you/!d;s/<[^>]*>//g'
 }
@@ -44,9 +44,9 @@ function myip() {
 
 function pickfrom() {
     about 'picks random line from file'
+    group 'base'
     param '1: filename'
     example '$ pickfrom /usr/share/dict/words'
-    group 'base'
 
     local file=$1
     [ -z "$file" ] && reference $FUNCNAME && return
@@ -57,11 +57,11 @@ function pickfrom() {
 
 function passgen() {
     about 'generates random password from dictionary words'
+    group 'base'
     param 'optional integer length'
     param 'if unset, defaults to 4'
     example '$ passgen'
     example '$ passgen 6'
-    group 'base'
 
     local i pass length=${1:-4}
     pass=$(echo $(for i in $(eval echo "{1..$length}"); do pickfrom /usr/share/dict/words; done))
@@ -71,12 +71,12 @@ function passgen() {
 
 function mkcd() {
     about 'make one or more directories and cd into the last one'
+    group 'base'
     param 'one or more directories to create'
     example '$ mkcd foo'
     example '$ mkcd /tmp/img/photos/large'
     example '$ mkcd foo foo1 foo2 fooN'
     example '$ mkcd /tmp/img/photos/large /tmp/img/photos/self /tmp/img/photos/Beijing'
-    group 'base'
 
     mkdir -p -- "$@" && eval cd -- "\"\$$#\""
 }
@@ -90,8 +90,8 @@ function lsgrep() {
 
 function usage() {
     about 'disk usage per directory, in Mac OS X and Linux'
-    param '1: directory name'
     group 'base'
+    param '1: directory name'
 
     if [ $(uname) = "Darwin" ]; then
         if [ -n "$1" ]; then
@@ -111,9 +111,9 @@ function usage() {
 
 function comex() {
     about 'checks for existence of a command'
+    group 'base'
     param '1: command to check'
     example '$ comex ls'
-    group 'base'
 
     type "$1"  #&> /dev/null ;
 }
@@ -122,8 +122,9 @@ function comex() {
 # useful for administrators and configs
 function buf() {
     about 'back up file with timestamp'
-    param 'filename'
     group 'base'
+    param 'filename'
+    example 'buf $filename'
 
     local filename=$1
     local filetime=$(date +%Y%m%d_%H%M%S)
@@ -132,9 +133,10 @@ function buf() {
 
 function del() {
     about 'move files to hidden folder in tmp, that gets cleared on each reboot'
-    param 'file or folder to be deleted'
-    example 'del ./file.txt'
     group 'base'
+    param 'file or folder to be deleted'
+    example 'del $filename'
+    example 'del $foldername'
 
     mkdir -p /tmp/.trash && mv "$@" /tmp/.trash;
 }

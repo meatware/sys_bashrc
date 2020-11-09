@@ -11,31 +11,31 @@ h1 {
 
 h2 {
   color: #a9ea44;
-}  
+}
 
 h3 {
   color: #abf539;
-}  
+}
 
 h4 {
   color: #adff2f;
-}  
+}
 
 h5 {
   color: #ff2fad;
-}  
+}
 
 h6 {
   color: #812fff;
-}  
+}
 
 h7 {
   color: #2fadff;
-}  
+}
 
 h8 {
   color: #2fadff;
-}  
+}
 
 body {
   background-color: #282C34;
@@ -67,7 +67,7 @@ body {
   color: #79c800;
   font-size: 8pt;
 }
-    
+
 
 .wm-top-tool-expanded {
   position: absolute;
@@ -158,6 +158,19 @@ button:hover, .btn:hover, .btn-sm:hover, .btn-xs:hover, .btn-default:hover, .btn
   color: red;
 }
 
+/* ################################################# */
+pre { color: white !important; }
+
+.md-clipboard:before {
+    color: rgb(255, 255, 255);
+}
+
+.codehilite:hover .md-clipboard:before,.md-typeset .highlight:hover .md-clipboard:before,pre:hover .md-clipboard:before {
+    color: rgba(255, 255, 255, 0.54) !important
+}
+
+/* ################################################# */
+
 code {
   padding: 2px 5px;
   background: #31363F;
@@ -186,13 +199,13 @@ a, a:visited, a:hover, a:focus {
   text-decoration: none;
   outline: none;
 }
-  
+
 .wm-page-content a {
   color: #2fadff !important;
   text-decoration: none;
   outline: none;
 }
-  
+
 .search-title {
   color: #2fadff;
 }
@@ -215,16 +228,16 @@ ol li {
 }
 
 /* tables */
-th { 
+th {
   color: #00c8b3;
   font-weight: bolder;
   font-size: large;
-  text-align: center; 
-  vertical-align: middle;  
+  text-align: center;
+  vertical-align: middle;
 }
 
 td { color: mintcream;
-  text-align: center; 
+  text-align: center;
   vertical-align: middle;
 }
 td:nth-child(1) { color: #00c8b3; }

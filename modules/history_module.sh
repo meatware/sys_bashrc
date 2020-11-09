@@ -34,7 +34,7 @@ function grep_history() {
     history | grep "$1" ;
 }
 
-function _chop_first_colum() { awk '{for (i=2; i<NF; i++) printf $i " "; print $NF}' ; }
+function _chop_first_column() { awk '{for (i=2; i<NF; i++) printf $i " "; print $NF}' ; }
 
 function _add_line_numbers() { awk '{print NR " " $0}' ; }
 

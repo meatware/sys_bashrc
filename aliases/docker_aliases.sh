@@ -64,86 +64,38 @@ alias dkt='docker stats --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t
 alias dkps="docker ps"
 
 function dkln() {
-    about 'Signs into AWS EC2 instance using pattern ec2-user@${address}'
-    group 'ssh'
-    param 'Ip address or FQDN'
-    example 'sshec2 172.17.0.1'
+    about 'Gets docker logs from running container'
+    group 'docker'
+    param 'container-id or name'
+    example 'dkln 1411494fa3db'
 
     docker logs -f $(docker ps | grep $1 | awk '{print $1}')
 }
 
-function dkp() {
-    if [ ! -f .dockerignore ]; then
-        echo "Warning, .dockerignore file is missing."
-        read -p "Proceed anyway?"
-    fi
-
-    if [ ! -f package.json ]; then
-        echo "Warning, package.json file is missing."
-        read -p "Are you in the right directory?"
-    fi
-
-  VERSION=$(cat package.json | jq .version | sed 's/\"//g')
-  NAME=$(cat package.json | jq .name | sed 's/\"//g')
-  LABEL="$1/$NAME:$VERSION"
-
-  docker build --build-arg NPM_TOKEN=${NPM_TOKEN} -t $LABEL .
-
-  read -p "Press enter to publish"
-  docker push $LABEL
-}
-
-function dkpnc() {
-    if [ ! -f .dockerignore ]; then
-        echo "Warning, .dockerignore file is missing."
-        read -p "Proceed anyway?"
-    fi
-
-    if [ ! -f package.json ]; then
-        echo "Warning, package.json file is missing."
-        read -p "Are you in the right directory?"
-    fi
-
-  VERSION=$(cat package.json | jq .version | sed 's/\"//g')
-  NAME=$(cat package.json | jq .name | sed 's/\"//g')
-  LABEL="$1/$NAME:$VERSION"
-
-  docker build --build-arg NPM_TOKEN=${NPM_TOKEN} --no-cache=true -t $LABEL .
-  read -p "Press enter to publish"
-  docker push $LABEL
-}
-
-function dkpl() {
-    if [ ! -f .dockerignore ]; then
-        echo "Warning, .dockerignore file is missing."
-        read -p "Proceed anyway?"
-    fi
-
-    if [ ! -f package.json ]; then
-        echo "Warning, package.json file is missing."
-        read -p "Are you in the right directory?"
-    fi
-
-  VERSION=$(cat package.json | jq .version | sed 's/\"//g')
-  NAME=$(cat package.json | jq .name | sed 's/\"//g')
-  LATEST="$1/$NAME:latest"
-
-  docker build --build-arg NPM_TOKEN=${NPM_TOKEN} --no-cache=true -t $LATEST .
-  read -p "Press enter to publish"
-  docker push $LATEST
-}
-
 function dkclean() {
+    about 'Remove all exited containers and dangling volumes'
+    group 'docker'
+    example 'dkclean'
+
     docker rm $(docker ps --all -q -f status=exited)
     docker volume rm $(docker volume ls -qf dangling=true)
 }
 
-
 function dktop() {
+    about 'Docker Top - Formatted'
+    group 'docker'
+    example 'dktop'
+
     docker stats --format "table {{.Container}}\t{{.Name}}\t{{.CPUPerc}}  {{.MemPerc}}\t{{.NetIO}}\t{{.BlockIO}}"
 }
 
 function dkstats() {
+    about 'Docker stats - All or named container'
+    group 'docker'
+    param 'optional: container-id or name'
+    example 'dkstats'
+    example 'dkstats a2234c1bc7ea'
+
     if [ $# -eq 0 ]
         then docker stats --no-stream;
         else docker stats --no-stream | grep $1;
@@ -151,26 +103,40 @@ function dkstats() {
 }
 
 function dke() {
+    about 'Docker exec into container to get /bin/sh prompt'
+    group 'docker'
+    param 'container-id or name'
+    example 'dke a2234c1bc7ea'
+
     docker exec -it $1 /bin/sh
 }
 
 function dkrun() {
+    about 'Docker run into image to get /bin/sh prompt'
+    group 'docker'
+    param 'image-id or image repository'
+    example 'dkrun nginx'
+    example 'dkrun 992e3b7be046'
+
     docker run -it $1 /bin/sh
 }
 
 function dkexe() {
+    about 'Docker exec to run arbitary command on running container.'
+    group 'docker'
+    param '1. container-id or name'
+    param '2. arbitary nix command'
+    example 'dkexe 992e3b7be046 ls /workspace/'
+
     docker exec -it $1 $2
 }
 
-function dkreboot() {
-    osascript -e 'quit app "Docker"'
-    countdown 2
-    open -a Docker
-    echo "Restarting Docker engine"
-    countdown 120
-}
-
 function dkstate() {
+    about 'Read docker state of running container via docker inspect'
+    group 'docker'
+    param 'container-id or name'
+    example 'dkstate a2234c1bc7ea'
+
     docker inspect $1 | jq .[0].State
 }
 
@@ -188,4 +154,80 @@ function mongo() {
 function redis() {
     redisLabel=$(docker ps | grep redis | awk '{print $NF}')
     docker exec -it $redisLabel redis-cli
+}
+
+function dkp() {
+    about 'Build & push npm container package with $NPM_TOKEN as build arg. Requires package.json'
+    group 'docker'
+    param 'container name'
+    example 'dkp mynpm-conatiner'
+
+    if [ ! -f .dockerignore ]; then
+        echo "Warning, .dockerignore file is missing."
+        read -p "Proceed anyway?"
+    fi
+
+    if [ ! -f package.json ]; then
+        echo "Warning, package.json file is missing."
+        read -p "Are you in the right directory?"
+    fi
+
+    VERSION=$(cat package.json | jq .version | sed 's/\"//g')
+    NAME=$(cat package.json | jq .name | sed 's/\"//g')
+    LABEL="$1/$NAME:$VERSION"
+
+    docker build --build-arg NPM_TOKEN=${NPM_TOKEN} -t $LABEL .
+
+    read -p "Press enter to publish"
+    docker push $LABEL
+}
+
+function dkpnc() {
+    about 'Build (without cache) & push npm container with $NPM_TOKEN as build arg. Requires package.json'
+    group 'docker'
+    param 'container name'
+    example 'dkpnc mynpm-conatiner'
+
+    if [ ! -f .dockerignore ]; then
+        echo "Warning, .dockerignore file is missing."
+        read -p "Proceed anyway?"
+    fi
+
+    if [ ! -f package.json ]; then
+        echo "Warning, package.json file is missing."
+        read -p "Are you in the right directory?"
+    fi
+
+    VERSION=$(cat package.json | jq .version | sed 's/\"//g')
+    NAME=$(cat package.json | jq .name | sed 's/\"//g')
+    LABEL="$1/$NAME:$VERSION"
+
+    docker build --build-arg NPM_TOKEN=${NPM_TOKEN} --no-cache=true -t $LABEL .
+    read -p "Press enter to publish"
+    docker push $LABEL
+}
+
+function dkpl() {
+    about 'Build (without cache) & push npm container (with latest tag) and with $NPM_TOKEN as build arg. Requires package.json'
+    group 'docker'
+    param 'container name'
+    example 'dkpl mynpm-conatiner'
+
+    if [ ! -f .dockerignore ]; then
+        echo "Warning, .dockerignore file is missing."
+        read -p "Proceed anyway?"
+    fi
+
+    if [ ! -f package.json ]; then
+        echo "Warning, package.json file is missing."
+        read -p "Are you in the right directory?"
+    fi
+
+    VERSION=$(cat package.json | jq .version | sed 's/\"//g')
+    NAME=$(cat package.json | jq .name | sed 's/\"//g')
+    LATEST="$1/$NAME:latest"
+
+    docker build --build-arg NPM_TOKEN=${NPM_TOKEN} --no-cache=true -t $LATEST .
+    read -p "Press enter to publish"
+    docker push $LATEST
 }

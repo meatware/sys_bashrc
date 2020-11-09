@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <meta name="author" content="giri">
-    <link rel="canonical" href="http://fillmein.com/modules/docker-compose_module/">
+    <link rel="canonical" href="https://meatware.github.io/sys_bashrc/modules/docker-compose_module/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>docker-compose_module - Sys Bashrc</title>
@@ -72,10 +72,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     </div>
     
     <div class="wm-article-nav">
-      <a href="../base_module/" class="btn btn-xs btn-default pull-left">
+      <a href="../ssh_helper_module/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../base_module/" class="btn btn-xs btn-link">
-        base_module
+        Previous</a><a href="../ssh_helper_module/" class="btn btn-xs btn-link">
+        ssh_helper_module
       </a>
     </div>
     
@@ -86,14 +86,16 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <h1 id="helper-functions-for-using-docker-compose">Helper functions for using docker-compose</h1>
 <p><strong><em>(in /home/bsgt/sys_bashrc/modules/docker-compose_module.sh)</em></strong></p>
 <h2 id="function-index">Function Index</h2>
-<pre><code class="language-bash">01 - docker-compose-fresh()
+<pre><code class="language-python">01 - docker-compose-fresh
 </code></pre>
 <hr />
-<h3 id="docker-compose-fresh">docker-compose-fresh():</h3>
+<h3 id="docker-compose-fresh">&gt;&gt; docker-compose-fresh():</h3>
+<blockquote>
 <p><strong><em>about</em></strong>: Shut down, remove and start again the docker-compose setup, then tail the logs</p>
 <p><strong><em>group</em></strong>: docker-compose</p>
 <p><strong><em>param</em></strong>: 1: name of the docker-compose.yaml file to use (optional). Default: docker-compose.yaml</p>
 <p><strong><em>example</em></strong>: <code>docker-compose-fresh docker-compose-foo.yaml</code></p>
+</blockquote>
 <pre><code class="language-bash">function docker-compose-fresh() {
 
     local DCO_FILE_PARAM=&quot;&quot;
@@ -108,9 +110,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     docker-compose $DCO_FILE_PARAM logs -f --tail 100
 }
 
-</code></pre>
-<h4 id="function-calls">Function Calls:</h4>
-<pre><code class="language-bash">No functions called.
 </code></pre>
 
   <br>
@@ -134,10 +133,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     </div>
     
     <div class="wm-article-nav">
-      <a href="../base_module/" class="btn btn-xs btn-default pull-left">
+      <a href="../ssh_helper_module/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../base_module/" class="btn btn-xs btn-link">
-        base_module
+        Previous</a><a href="../ssh_helper_module/" class="btn btn-xs btn-link">
+        ssh_helper_module
       </a>
     </div>
     

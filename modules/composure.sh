@@ -348,7 +348,7 @@ function glossary() {
 function metafor() {
     about 'prints function metadata associated with keyword'
     param '1: meta keyword'
-    example '$ typeset -f glossary | metafor example'
+    example 'typeset -f glossary | metafor example'
     group 'composure'
 
     typeset keyword=$1
