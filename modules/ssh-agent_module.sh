@@ -123,12 +123,19 @@ function _ensure_sshagent_dead() {
   rm -f "${SSH_AGENT_ENV}"
 }
 
+function sshlist() {
+  about 'list hosts defined in ssh config'
+  group 'ssh'
+  example 'sshlist'
+
+  awk '$1 ~ /Host$/ {for (i=2; i<=NF; i++) print $i}' ~/.ssh/config
+}
 
 function sshagent() {
   about 'ensures ssh-agent is up and running'
   param '1: on|off '
-  example '$ sshagent on'
   group 'ssh'
+  example '$ sshagent on'
 
   [[ -z "${SSH_AGENT_ENV}" ]] \
   && export SSH_AGENT_ENV="${HOME}/.ssh/agent_env.${HOSTNAME}"
