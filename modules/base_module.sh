@@ -119,7 +119,15 @@ function comex() {
 }
 
 
-# useful for administrators and configs
+function default-file-dir-perms-set() {
+    about 'Recursively set directories to 0755 & files under `pwd` to 0644 octal perms'
+    group 'base'
+    example 'default-file-dir-perms-set'
+
+    find . -type d -print0 | xargs -r -0 chmod 0755
+    find . -type f -print0 | xargs -r -0 chmod 0644
+}
+
 function buf() {
     about 'back up file with timestamp'
     group 'base'
