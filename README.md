@@ -18,6 +18,9 @@ source ~/.bashrc
 
 ## Installation - wget & unzip
 ```sh
+
+sudo apt install wget jq unzip
+
 cd
 mv .bashrc .your_old_bashrc
 #
