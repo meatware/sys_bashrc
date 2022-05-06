@@ -21,7 +21,7 @@ source ~/.bashrc
 cd
 mv .bashrc .your_old_bashrc
 #
-RELEASE_VERSION=1.0.0
+RELEASE_VERSION=$(wget -q -nv -O- "https://api.github.com/repos/meatware/sys_bashrc/releases/latest" | jq '.tag_name' | sed 's|v||g' | sed 's|"||g')
 wget https://github.com/meatware/sys_bashrc/archive/refs/tags/v${RELEASE_VERSION}.zip -O sys_bashrc.zip
 unzip sys_bashrc.zip
 mv sys_bashrc-${RELEASE_VERSION} sys_bashrc
