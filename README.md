@@ -3,9 +3,7 @@
 ## Premise
 Slimmed down sysadmin .bashrc that should hopefully have minimal system dependencies.
 
-## Extended Documentation
-https://meatware.github.io/sys_bashrc/
-
+## Extended Documentation >> https://meatware.github.io/sys_bashrc/
 
 ## Installation - Git Clone
 ```
