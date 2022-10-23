@@ -16,15 +16,13 @@ alias gcl='git clone'
 alias ga='git add'
 
 gam() {
-  local modified_files=$(git status | grep modified: | awk '{print $2}' | tr '\n' ' ')
-  git add $modified_files
+  git ls-files -m | tr '\n' '\0' | xargs -0 -L1 -I '$' git add '$'
 }
 
 alias grm='git rm'
 
 grma() {
-  local remove_files=$(git status | grep deleted: | awk '{print $2}' | tr '\n' ' ')
-  git rm $remove_files
+  git ls-files -m | tr '\n' '\0' | xargs -0 -L1 -I '$' git rm '$'
 }
 
 alias gap='git add -p'

@@ -24,12 +24,12 @@
 # You can still use colsw  to change theme settings. thes ewill not be seen till
 # full is set to ""full" or "mid"
 
-# SET_FULL_PROMPT="full"
+SET_FULL_PROMPT="full"
 
 # Theme vars below are unused when SET_FULL_PROMPT is commented
-SET_THEME_VAR="339"
-SET_BARCOL="\[\033[0;1;91m\]"
-SET_TXTCOL="\[\033[00m\]"
+SET_THEME_VAR="49"
+SET_BARCOL="\[\033[38;5;226m\]"
+SET_TXTCOL="\[\033[0;1;34m\]"
 SET_PATHCOL_VAR="1"
 SET_PATHCOL="\[\033[0;37m\]"
 
