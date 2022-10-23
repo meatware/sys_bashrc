@@ -21,6 +21,10 @@ gam() {
 
 alias grm='git rm'
 
+gau() {
+  git ls-files --others --exclude-standard | tr '\n' '\0' | xargs -0 -L1 -I '$' git add '$'
+}
+
 grma() {
   git ls-files -m | tr '\n' '\0' | xargs -0 -L1 -I '$' git rm '$'
 }
